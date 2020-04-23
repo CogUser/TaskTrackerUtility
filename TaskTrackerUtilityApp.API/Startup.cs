@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using TaskTrackerUtilityApp.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using TaskTrackerUtilityApp.API.Models.DataManager;
+using TaskTrackerUtilityApp.API.Models.Repository;
+using TaskTrackerUtilityApp.API.Models;
 
 namespace TaskTrackerUtilityApp.API
 {
@@ -30,6 +33,12 @@ namespace TaskTrackerUtilityApp.API
         {
             services.AddDbContextPool<DataContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("TaskTrackerDBConnection")));
+            //services.AddDbContext<UserContext>(opts => 
+            //opts.UseSqlServer(Configuration.GetConnectionString("TaskTrackerDBConnection")));
+            services.AddScoped<IDataRepository<User>, UserManager>();
+            services.AddScoped<IDataRepository<Role>, RoleManager>();
+            services.AddSwaggerGen(c =>
+             c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Task Tracker API", Version = "v1" }));
             services.AddControllers();
             services.AddCors();
         }
@@ -41,6 +50,10 @@ namespace TaskTrackerUtilityApp.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint(url:"/swagger/v1/swagger.json", name:"My API V1"));
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 

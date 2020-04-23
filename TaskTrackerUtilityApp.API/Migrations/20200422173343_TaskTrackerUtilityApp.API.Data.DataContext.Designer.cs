@@ -2,39 +2,23 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskTrackerUtilityApp.API.Data;
 
 namespace TaskTrackerUtilityApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200422173343_TaskTrackerUtilityApp.API.Data.DataContext")]
+    partial class TaskTrackerUtilityAppAPIDataDataContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.Role", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoleId");
-
-                    b.ToTable("Roles");
-                });
 
             modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.User", b =>
                 {
@@ -49,18 +33,13 @@ namespace TaskTrackerUtilityApp.API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -78,15 +57,6 @@ namespace TaskTrackerUtilityApp.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Values");
-                });
-
-            modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.User", b =>
-                {
-                    b.HasOne("TaskTrackerUtilityApp.API.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
