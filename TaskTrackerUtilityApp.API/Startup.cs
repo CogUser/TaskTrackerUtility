@@ -1,3 +1,4 @@
+using System.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TaskTrackerUtilityApp.API.Data;
+using TaskTrackerUtilityApp.API.Models;
+using TaskTrackerUtilityApp.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
@@ -28,10 +31,11 @@ namespace TaskTrackerUtilityApp.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<DataContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("TaskTrackerDBConnection")));
+            services.ConfigureSqlContext(Configuration);
             services.AddControllers();
-            services.AddCors();
+            services.ConfigureCors();
+            services.AddScoped<ITaskAttachmentRepository, TaskAttachmentRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +46,7 @@ namespace TaskTrackerUtilityApp.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors();
 
             //app.UseHttpsRedirection();
 
