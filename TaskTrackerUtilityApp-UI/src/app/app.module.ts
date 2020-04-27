@@ -13,7 +13,6 @@ import { LineChartContainer } from './linechart/pages/linechart-container';
 import { NavComponent } from './nav/nav.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 
-
 @NgModule({
    declarations: [
       AppComponent,
