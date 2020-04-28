@@ -14,13 +14,14 @@ namespace TaskTrackerUtilityApp.API.Controllers
     [ApiController]
     public class TaskMaintenancesController : ControllerBase
     {
-        private readonly TaskMaintenanceManager _dataRepository;
+        private readonly ITaskMaintenanceDataRepository _dataRepository;
 
-        public TaskMaintenancesController(TaskMaintenanceManager dataRepository)
+        public TaskMaintenancesController(ITaskMaintenanceDataRepository dataRepository)
         {
             _dataRepository = dataRepository;
         }
 
+       
         // GET: api/User
         [HttpGet]
         public IActionResult Get()
@@ -29,21 +30,21 @@ namespace TaskTrackerUtilityApp.API.Controllers
             return Ok(tasks);
         }
 
-        [HttpGet]
+        [HttpGet("GetTasksByStatus/{statusID}")]
         public IActionResult GetTasksByStatusID(string statusID)
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByStatusID(statusID);
             return Ok(tasks);
         }
 
-        [HttpGet]
+        [HttpGet("GetTasksByUser/{userID}")]
         public IActionResult GetTasksByGetTasksForUser(int userID)
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTaskByUserID(userID);
             return Ok(tasks);
         }
         // GET: api/User/5                         
-        [HttpGet("{taskID}", Name = "Get")]
+        [HttpGet("GetByTaskId/{taskID}", Name = "Get")]
         public IActionResult Get(int taskID)
         {
             TaskMaintenance taskMaintenance = _dataRepository.GetTaskMaintenance(taskID);

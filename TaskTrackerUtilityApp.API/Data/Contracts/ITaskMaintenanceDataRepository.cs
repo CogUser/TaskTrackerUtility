@@ -13,5 +13,9 @@ namespace TaskTrackerUtilityApp.API.Data
         void AddTaskMaintenance(TaskMaintenance taskMaintenance);
         void UpdateTaskMaintenance(TaskMaintenance taskMaintenance, TaskMaintenance newTaskMaintenance);
         void DeleteTaskMaintenance(TaskMaintenance taskMaintenance);
+
+        IEnumerable<TaskMaintenance> GetTaskByUserID(int userID);
+
+        IEnumerable<TaskMaintenance> GetTasksByStatusID(string statusID);
     }
 }
