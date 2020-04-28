@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -11,12 +12,12 @@ import { BarchartComponent } from './barchart/pages/barchart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BarChartContainer } from './barchart/pages/barchart-container';
 import { LineChartContainer } from './linechart/pages/linechart-container';
-
+import { NavComponent } from './nav/pages/nav.component';
 import { UserComponent } from './user/pages/user.component';
 import { AgGridModule } from 'ag-grid-angular';
 
-import { NavComponent } from './nav/nav.component';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AuthService } from './_services/auth.service';
 
 
 @NgModule({
@@ -34,12 +35,15 @@ import { DashboardModule } from './dashboard/dashboard.module';
       BrowserModule,
       HttpClientModule,
       BrowserAnimationsModule,
+      DashboardModule,
+      FormsModule,
       AgGridModule.withComponents([]),
       DashboardModule,
-     AppRoutingModule
+      AppRoutingModule
    ],
    providers: [
-      ChartService
+      ChartService,
+      AuthService
    ],
    bootstrap: [
       AppComponent

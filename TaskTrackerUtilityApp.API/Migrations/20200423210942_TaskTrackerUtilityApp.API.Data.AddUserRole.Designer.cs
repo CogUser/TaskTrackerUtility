@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskTrackerUtilityApp.API.Data;
 
 namespace TaskTrackerUtilityApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200423210942_TaskTrackerUtilityApp.API.Data.AddUserRole")]
+    partial class TaskTrackerUtilityAppAPIDataAddUserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,45 +34,14 @@ namespace TaskTrackerUtilityApp.API.Migrations
                     b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("RoleId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.TaskAttachment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContentType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastModifiedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TaskAttachments");
                 });
 
             modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.User", b =>
@@ -89,21 +60,10 @@ namespace TaskTrackerUtilityApp.API.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -123,13 +83,11 @@ namespace TaskTrackerUtilityApp.API.Migrations
                     b.ToTable("Values");
                 });
 
-            modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.User", b =>
+            modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.Role", b =>
                 {
-                    b.HasOne("TaskTrackerUtilityApp.API.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("TaskTrackerUtilityApp.API.Models.User", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
