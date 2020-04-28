@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "trackuserutility": {
+      "hosting": {
+        "TaskTrackerUtilityApp-UI": [
+          "trackuserutility"
+        ]
+      }
+    }
+  }
+}
