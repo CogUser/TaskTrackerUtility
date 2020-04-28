@@ -1,0 +1,57 @@
+
+ <!-- (onFileDrop)="dropped($event,$event)"  (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"-->
+
+ <table>
+    <tr>
+      <td>
+       File:
+      </td>
+      <td >
+        <ngx-file-drop  dropZoneLabel="Drop files here" >
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <input style="text-align: center;" type="file"  accept="/.*"  (change)="upload($event)"  accept=".png,.jpg,.txt,.pdf,.xlsx" /> 
+            </ng-template>
+        </ngx-file-drop>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Comments:
+      </td>
+      <td>
+        <textarea #comment style="width: 100%;height: 90%;" rows="1" cols="10"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td style="center">
+        <button class="btn btn-success" (click)="onSubmit(comment.value)">Submit</button>
+      </td>
+       
+    </tr>
+  </table>
+  <table *ngIf="SuccessDiv!=true">
+    <tr>
+      <td style="width:20%">Last Modified : {{lastmodifieddate | date:'MM-dd-yyyy'}}</td> 
+  
+    </tr>
+    <tr>
+      <td style="width:20%">Size : {{size}} bytes</td>
+    </tr>
+     
+      <tr>
+      <td style="width:20%">Uploaded File type :{{Filetype}}</td>
+    </tr>
+    <tr>
+      <td><img style="width: 20%;height: 50%;" [src]="imageURL"></td>
+    </tr>
+    <tr>
+        <td>
+            <a [href]="imageURL">Download file</a>
+        </td>
+    </tr>
+  </table>
+  
+  
+  
+  
+  
