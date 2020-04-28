@@ -11,9 +11,12 @@ import { BarchartComponent } from './barchart/pages/barchart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BarChartContainer } from './barchart/pages/barchart-container';
 import { LineChartContainer } from './linechart/pages/linechart-container';
+
 import { UserComponent } from './user/pages/user.component';
 import { AgGridModule } from 'ag-grid-angular';
 
+import { NavComponent } from './nav/nav.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @NgModule({
@@ -24,14 +27,16 @@ import { AgGridModule } from 'ag-grid-angular';
       BarchartComponent,
       BarChartContainer,
       LineChartContainer,
-      UserComponent
+      UserComponent,
+      NavComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       BrowserAnimationsModule,
       AgGridModule.withComponents([]),
-      AppRoutingModule
+      DashboardModule,
+     AppRoutingModule
    ],
    providers: [
       ChartService
@@ -40,7 +45,8 @@ import { AgGridModule } from 'ag-grid-angular';
       AppComponent
    ],
    entryComponents: [
-      BarChartContainer, LineChartContainer
+      BarChartContainer,
+      LineChartContainer
    ]
 })
 export class AppModule { }
