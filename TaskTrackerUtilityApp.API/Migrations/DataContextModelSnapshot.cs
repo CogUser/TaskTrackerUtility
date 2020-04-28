@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskTrackerUtilityApp.API.Data;
+using System;                                                                                                                                   
 
 namespace TaskTrackerUtilityApp.API.Migrations
 {
@@ -17,6 +18,69 @@ namespace TaskTrackerUtilityApp.API.Migrations
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.TaskMaintenance", b =>
+            { 
+                b.Property<int>("TaskId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<DateTime>("ActualEndDate")
+                    .HasColumnType("datetime2");
+
+                b.Property<DateTime>("ActualStartDate")
+                    .HasColumnType("datetime2");
+
+                b.Property<int>("AssignedTo")
+                    .HasColumnType("int");
+
+                b.Property<int>("Assignee")
+                    .HasColumnType("int");
+
+                b.Property<int>("CreatedBy")
+                    .HasColumnType("int");
+
+                b.Property<DateTime>("CreatedDateTime")
+                    .HasColumnType("datetime2");
+
+                b.Property<int>("ModifiedBy")
+                    .HasColumnType("int");
+
+                b.Property<DateTime>("ModifiedDateTime")
+                    .HasColumnType("datetime2");
+
+                b.Property<DateTime>("PlannedEndDate")
+                    .HasColumnType("datetime2");
+
+                b.Property<DateTime>("PlannedStartDate")
+                    .HasColumnType("datetime2");
+
+                b.Property<string>("Priority")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Progress")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Status")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("TaskDescription")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("TaskSummary")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<int>("UserId")
+                    .HasColumnType("int");
+
+                b.Property<string>("Watchers")
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("TaskId");
+
+                b.ToTable("TaskMaintenance");
+            });
 
             modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.Value", b =>
                 {

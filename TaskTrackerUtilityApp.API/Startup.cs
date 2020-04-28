@@ -35,6 +35,7 @@ namespace TaskTrackerUtilityApp.API
             services.AddControllers();
             services.ConfigureCors();
             services.AddScoped<ITaskAttachmentRepository, TaskAttachmentRepository>();
+            services.AddScoped<ITaskMaintenanceDataRepository, TaskMaintenanceManager>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 

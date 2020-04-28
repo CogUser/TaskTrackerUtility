@@ -10,5 +10,7 @@ namespace TaskTrackerUtilityApp.API.Data
        public DbSet<Value> Values {get; set;}
 
        public DbSet<TaskAttachment> TaskAttachments {get; set;}
+
+       public DbSet<TaskMaintenance> TaskMaintenance { get; set; }
     }
 }
