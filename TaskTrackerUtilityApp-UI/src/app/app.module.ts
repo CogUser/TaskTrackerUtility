@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/pages/value.component';
@@ -11,6 +12,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BarChartContainer } from './barchart/pages/barchart-container';
 import { LineChartContainer } from './linechart/pages/linechart-container';
 
+import { UserComponent } from './user/pages/user.component';
+import { AgGridModule } from 'ag-grid-angular';
+
+import { NavComponent } from './nav/nav.component';
+import { DashboardModule } from './dashboard/dashboard.module';
+
 
 @NgModule({
    declarations: [
@@ -19,12 +26,17 @@ import { LineChartContainer } from './linechart/pages/linechart-container';
       LinechartComponent,
       BarchartComponent,
       BarChartContainer,
-      LineChartContainer
+      LineChartContainer,
+      UserComponent,
+      NavComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      AgGridModule.withComponents([]),
+      DashboardModule,
+     AppRoutingModule
    ],
    providers: [
       ChartService
@@ -33,7 +45,8 @@ import { LineChartContainer } from './linechart/pages/linechart-container';
       AppComponent
    ],
    entryComponents: [
-      BarChartContainer, LineChartContainer
+      BarChartContainer,
+      LineChartContainer
    ]
 })
 export class AppModule { }
