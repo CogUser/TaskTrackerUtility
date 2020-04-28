@@ -16,11 +16,11 @@ namespace TaskTrackerUtilityApp.API.Models
         
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public byte[] PasswordHash {get; set;}
+        public byte[] PasswordSalt {get; set;}
         public string EmailAddress { get; set; }
-        public bool IsActive { get; set; }
-       
+        public bool IsActive { get; set; }      
         public Role Role { get; set; }
-
         public int RoleId { get; set;  }
     }
 }
