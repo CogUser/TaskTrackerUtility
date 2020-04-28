@@ -1,0 +1,24 @@
+[
+{
+    "id":1,
+    "name": "Vijay",
+    "email": "vijay.patireddy@cognizant.com",
+    "role":  "Admin",
+    "isactive": true
+},
+{
+    "id":2,
+    "name": "Viswa",
+    "email": "vijay.patireddy@cognizant.com",
+    "role": "Developer",
+    "isactive":true
+},
+{
+    "id":3,
+    "name": "Supriya",
+    "email": "vijay.patireddy@cognizant.com",
+    "role": "Developer",
+    "isactive":false
+}
+
+]

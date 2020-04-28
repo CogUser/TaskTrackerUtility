@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/pages/value.component';
@@ -10,6 +11,9 @@ import { BarchartComponent } from './barchart/pages/barchart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BarChartContainer } from './barchart/pages/barchart-container';
 import { LineChartContainer } from './linechart/pages/linechart-container';
+import { UserComponent } from './user/pages/user.component';
+import { AgGridModule } from 'ag-grid-angular';
+
 
 
 @NgModule({
@@ -19,12 +23,15 @@ import { LineChartContainer } from './linechart/pages/linechart-container';
       LinechartComponent,
       BarchartComponent,
       BarChartContainer,
-      LineChartContainer
+      LineChartContainer,
+      UserComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      AgGridModule.withComponents([]),
+      AppRoutingModule
    ],
    providers: [
       ChartService

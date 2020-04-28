@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "role":  "Admin",
+        "isactive": true
+    },
+    {
+        "id": 2,
+        "role":  "Developer",
+        "isactive": true
+    },
+    {
+        "id": 3,
+        "role":  "Developer",
+        "isactive": true
+    }
+    
+    ]
