@@ -16,6 +16,9 @@ using TaskTrackerUtilityApp.API.Models;
 using TaskTrackerUtilityApp.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using TaskTrackerUtilityApp.API.Models.DataManager;
+using TaskTrackerUtilityApp.API.Models.Repository;
+using TaskTrackerUtilityApp.API.Models;
 
 namespace TaskTrackerUtilityApp.API
 {
@@ -32,11 +35,15 @@ namespace TaskTrackerUtilityApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureSqlContext(Configuration);
-            services.AddControllers();
-            services.ConfigureCors();
+            services.AddScoped<IDataRepository<User>, UserManager>();
+            services.AddScoped<IDataRepository<Role>, RoleManager>();
             services.AddScoped<ITaskAttachmentRepository, TaskAttachmentRepository>();
             services.AddScoped<ITaskMaintenanceDataRepository, TaskMaintenanceManager>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddSwaggerGen(c =>
+             c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Task Tracker API", Version = "v1" }));
+            services.AddControllers();
+            services.ConfigureCors();          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +56,10 @@ namespace TaskTrackerUtilityApp.API
 
             app.UseCors( x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
  
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint(url:"/swagger/v1/swagger.json", name:"My API V1"));
+
             //app.UseHttpsRedirection();
 
             app.UseRouting();

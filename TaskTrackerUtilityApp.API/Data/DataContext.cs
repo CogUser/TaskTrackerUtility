@@ -12,5 +12,9 @@ namespace TaskTrackerUtilityApp.API.Data
        public DbSet<TaskAttachment> TaskAttachments {get; set;}
 
        public DbSet<TaskMaintenance> TaskMaintenance { get; set; }
+       
+       public DbSet<User> Users { get; set; }
+
+       public DbSet<Role> Roles { get; set; }
     }
 }
