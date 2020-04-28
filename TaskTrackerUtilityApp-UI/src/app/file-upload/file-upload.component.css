@@ -1,0 +1,10 @@
+textarea {
+    height: 1em;
+    width: 50%;
+    padding: 3px;
+    transition: all 0.5s ease;
+}
+
+textarea:focus {
+    height: 4em;
+}
