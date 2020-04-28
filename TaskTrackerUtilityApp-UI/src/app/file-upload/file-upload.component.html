@@ -9,7 +9,7 @@
       <td >
         <ngx-file-drop  dropZoneLabel="Drop files here" >
           <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-            <input style="text-align: center;" type="file"  accept="/.*"  (change)="upload($event)"  accept=".png,.jpg,.txt" /> 
+            <input style="text-align: center;" type="file"  accept="/.*"  (change)="upload($event)"  accept=".png,.jpg,.txt,.pdf,.xlsx" /> 
             </ng-template>
             </ngx-file-drop>
       </td>
@@ -44,63 +44,14 @@
     <tr>
       <td><img style="width: 20%;height: 50%;" [src]="imageURL"></td>
     </tr>
+    <tr>
+        <td>
+            <a [href]="imageURL">Download file</a>
+        </td>
+    </tr>
   </table>
   
   
   
-  <!-- <div style="width:40%;height: 20%;" class="center">
-    <ngx-file-drop dropZoneLabel="Drop files here" onchange="upload($event)">
-        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-          <table>
-              <tr>
-              
-             
-              <td class="col-md-4"> 
-                <input type="file"  accept="/.*"  (change)="upload($event)"  accept=".png,.jpg,.txt" /> 
-             </td>
-            </tr>
-          <tr>
-              <div>
-                <progress  max="100" [value]="(uploadProgress | async)"></progress>
-                <div class="container" *ngIf="downloadURL | async; let url">
-                  
-                </div>  
-              </div>
-                
-            </tr>
-            </table> 
-        </ng-template>
-    </ngx-file-drop>
-      <div class="upload-table">
-        <table class="table">
-            
-            <tbody class="upload-name-style">
-                 <tr>
-                   <td>
-                     Comment :
-                   </td>
-                   <td>
-                     
-                     <input style="width: 100%;" type="text" name="comment" />
-                   </td>
-                 </tr>
-                <tr>
-                   
-                  <td style="width:20%">Last Modified : {{lastmodifieddate | date:'MM-dd-yyyy'}}</td> 
-                </tr>
   
-                <tr>
-                  <td style="width:20%">Size : {{size}} bytes</td>
-                </tr>
-                 
-                  <tr>
-                  <td style="width:20%">Uploaded File type :{{Filetype}}</td>
-                </tr>
-                <tr>
-                  <td><img style="width: 20%;height: 50%;" [src]="image"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>  
-  </div>   -->
   
