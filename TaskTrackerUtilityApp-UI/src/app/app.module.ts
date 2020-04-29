@@ -57,6 +57,7 @@ import { TasksComponent } from './tasks/pages/tasks.component';
    ],
    imports: [
       BrowserModule,
+      BrowserAnimationsModule,
       HttpClientModule,
       DashboardModule,
       FormsModule,
