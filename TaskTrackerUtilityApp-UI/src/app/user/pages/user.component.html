@@ -1,0 +1,108 @@
+<div style="margin: 30px; ">
+
+  <div *ngIf="showGrid">
+  <div style="text-align: right;">
+  <button  mat-raised-button color="primary" (click)="addNewUser()" >Add User</button>
+</div>
+<div style="padding-top: 10px;">
+
+
+<table mat-table style="margin-left: 10px;margin-right: 40px;" [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <ng-container matColumnDef="userName">
+    <th mat-header-cell *matHeaderCellDef> User Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="emailAddress">
+    <th mat-header-cell *matHeaderCellDef> Email ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="role">
+    <th mat-header-cell *matHeaderCellDef> Role </th>
+    <td mat-cell *matCellDef="let element"> {{element.role.roleName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isActive">
+    <th mat-header-cell *matHeaderCellDef> IsActive </th>
+    <td mat-cell *matCellDef="let element">
+
+      <mat-icon *ngIf="element.isActive; else showInActive" aria-hidden="false" style="color: green" aria-label="Example home icon">check_circle</mat-icon>
+      <ng-template #showInActive>
+        <mat-icon aria-hidden="false" style="color: grey;" aria-label="Example home icon">check_circle</mat-icon>
+      
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="showEditOrAdd(element)" aria-label="Example icon button with a filter list icon">
+        <mat-icon>edit</mat-icon>
+      </button>
+&nbsp;
+      <button mat-icon-button  color="warn" (click)="showDeleteConfirmation(element)" aria-label="Example icon button with a filter list icon">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+</div>
+
+  
+  <section *ngIf="!showGrid" fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card fxFlex="500px" fxFlex.xs="90%">
+        <mat-card-title>{{formMessage}}</mat-card-title>
+        <form [formGroup]="formData" autocomplete="off" novalidate (ngSubmit)="formSubmit(formData.value)" fxLayout="column wrap"
+      fxLayoutAlign="center center" fxLayoutGap="10px">
+  <mat-card-content>
+    <mat-form-field>
+        <input matInput type="text" placeholder="Username" formControlName="userName" id="userName">
+        <mat-hint align="end">Not more then 15 characters long.</mat-hint>
+        <mat-error *ngIf="hasError('userName', 'required')">Username is required</mat-error>
+        <mat-error *ngIf="hasError('userName', 'maxlength')">You have more than 15 characters</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Email" formControlName="emailAddress" id="emailAddress">
+        <mat-error *ngIf="hasError('emailAddress', 'required')">Email is required</mat-error>
+        <mat-error *ngIf="hasError('emailAddress', 'email')">Not a valid email</mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="!isEdit">
+        <input matInput type="password" placeholder="Password" formControlName="password" id="password">
+        <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+        <mat-error *ngIf="hasError('password', 'maxlength')">Password should be less than 15 characters</mat-error>
+        <mat-error *ngIf="hasError('password', 'minlength')">Password should be minimum 5 characters</mat-error>
+        
+      </mat-form-field>
+        <mat-checkbox formControlName="isActive" id="isActive">IsActive</mat-checkbox>
+
+        <mat-form-field>
+          <mat-label>Role</mat-label>
+          <mat-select formControlName="roleId" >
+            <mat-option *ngFor="let role of rolesData" [value]="role.roleId">
+              {{role.roleName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="hasError('roleId', 'required')">Role is required</mat-error>
+       
+        </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions align="center">
+    <button mat-raised-button color="primary" [disabled]="!formData.valid">Save</button>
+    <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+  </mat-card-actions>
+</form>
+      </mat-card>
+  </section>
+
+
+</div>

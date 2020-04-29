@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using TaskTrackerUtilityApp.API.Data;
+using TaskTrackerUtilityApp.API.Models;
 
 namespace TaskTrackerUtilityApp.API.Controllers
 {
@@ -14,11 +15,13 @@ namespace TaskTrackerUtilityApp.API.Controllers
     [ApiController]
     public class FileController: ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private ITaskAttachmentRepository _taskAttachmentRepository;
 
-        public FileController(DataContext context)
+        public FileController(IUnitOfWork unitOfWork, ITaskAttachmentRepository taskAttachmentRepository)
         {
-            _context = context;       
+            _unitOfWork = unitOfWork;     
+            _taskAttachmentRepository = taskAttachmentRepository;
         }
         
     public IActionResult Upload()
@@ -47,8 +50,8 @@ namespace TaskTrackerUtilityApp.API.Controllers
             }
             return Ok("All the files are successfully uploaded.");
         }   
-        catch (Exception ex)
-        {
+        catch (Exception)
+            {
             return StatusCode(500, "Internal server error");
         }
     }
