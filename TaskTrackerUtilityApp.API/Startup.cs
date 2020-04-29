@@ -18,7 +18,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using TaskTrackerUtilityApp.API.Models.DataManager;
 using TaskTrackerUtilityApp.API.Models.Repository;
-using TaskTrackerUtilityApp.API.Models;
 
 namespace TaskTrackerUtilityApp.API
 {

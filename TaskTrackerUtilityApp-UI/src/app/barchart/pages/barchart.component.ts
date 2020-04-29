@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartData } from '../models/chartData';
+import { TaskCountByStatus } from '../models/taskCountByStatus';
 import { ChartService } from '../services/chart.service';
 import * as Chart from 'chart.js';
 
@@ -10,25 +10,27 @@ import * as Chart from 'chart.js';
 })
 export class BarchartComponent implements OnInit {
 
-  player = [];
-  run = [];
+  taskStatus = [];
+  taskCount = [];
   barchart: Chart;
+  dataSource: TaskCountByStatus[];
 
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
-    this.chartService.getChartData().subscribe((chartData: ChartData[]) => {
+    this.chartService.getChartData().subscribe((chartData: TaskCountByStatus[]) => {
+      this.dataSource = chartData;
       chartData.forEach(item => {
-      this.player.push(item.playerName);
-      this.run.push(item.run);
+      this.taskStatus.push(item.taskStatus);
+      this.taskCount.push(item.taskCountByStatus);
     });
       this.barchart = new Chart('canvas_bar', {
-      type: 'bar',
+      type: 'doughnut',
       data: {
-        labels: this.player,
+        labels: this.taskStatus,
         datasets: [
           {
-            data: this.run,
+            data: this.taskCount,
             borderColor: '#3cba9f',
             backgroundColor: [
               '#3cb371',
@@ -49,14 +51,18 @@ export class BarchartComponent implements OnInit {
       },
       options: {
         legend: {
-          display: false
+          display: true,
+        position: 'bottom',
+        labels: {
+        fontColor: '#000080',
+      }
         },
         scales: {
           xAxes: [{
-            display: true
+            display: false
           }],
           yAxes: [{
-            display: true
+            display: false
           }],
         }
       }

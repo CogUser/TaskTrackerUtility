@@ -35,6 +35,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import { ConfirmationDialog } from './shared/ConfirmationDialog';
 import { TasksComponent } from './tasks/pages/tasks.component';
 
@@ -79,7 +80,8 @@ import { TasksComponent } from './tasks/pages/tasks.component';
       FlexLayoutModule,
       MatCheckboxModule,
       MatSelectModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatToolbarModule
    ],
    providers: [
       ChartService,

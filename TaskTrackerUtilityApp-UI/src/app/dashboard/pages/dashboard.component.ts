@@ -40,6 +40,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       ]
     }
   ];
+  
+
   constructor(private cd: ChangeDetectorRef, private cfr: ComponentFactoryResolver) { }
 
   ngOnInit() {
