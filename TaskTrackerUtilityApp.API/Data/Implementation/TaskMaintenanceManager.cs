@@ -28,7 +28,7 @@ namespace TaskTrackerUtilityApp.API.Data
             return _dbContext.TaskMaintenance.ToList();
         }
 
-        public TaskMaintenance GetTaskMaintenance(int taskID)
+        public TaskMaintenance GetTaskByID(int taskID)
         {
             return _dbContext.TaskMaintenance
        .FirstOrDefault(e => e.TaskId == taskID);
@@ -36,15 +36,16 @@ namespace TaskTrackerUtilityApp.API.Data
 
         public void UpdateTaskMaintenance(TaskMaintenance taskMaintenance, TaskMaintenance newtaskMaintenance)
         {
+            taskMaintenance = newtaskMaintenance;
             _dbContext.SaveChanges();
         }
-        public IEnumerable<TaskMaintenance> GetTaskByUserID(int userID)
+        public IEnumerable<TaskMaintenance> GetTasksByUserID(int userID)
         {
-            return _dbContext.TaskMaintenance.ToList();
+            return _dbContext.TaskMaintenance.Where(e => e.UserId == userID).ToList();
         }
-        public IEnumerable<TaskMaintenance> GetTasksByStatusID(string statusID)
+        public IEnumerable<TaskMaintenance> GetTasksByStatusID(string status)
         {
-            return _dbContext.TaskMaintenance.ToList();
+            return _dbContext.TaskMaintenance.Where(e => e.Status.ToLower() == status.ToLower()).ToList();
         }
     }
 }
