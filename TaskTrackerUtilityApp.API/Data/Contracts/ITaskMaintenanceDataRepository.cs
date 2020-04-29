@@ -9,13 +9,9 @@ namespace TaskTrackerUtilityApp.API.Data
     public interface ITaskMaintenanceDataRepository
     {
         IEnumerable<TaskMaintenance> GetAllTaskMaintenance();
-        TaskMaintenance GetTaskByID(int taskID);
+        TaskMaintenance GetTaskMaintenance(int taskID);
         void AddTaskMaintenance(TaskMaintenance taskMaintenance);
         void UpdateTaskMaintenance(TaskMaintenance taskMaintenance, TaskMaintenance newTaskMaintenance);
         void DeleteTaskMaintenance(TaskMaintenance taskMaintenance);
-        IEnumerable<TaskMaintenance> GetTasksByStatusID(string statusID);
-        IEnumerable<TaskMaintenance> GetTasksByUserID(int userID);
-
     }
-
 }
