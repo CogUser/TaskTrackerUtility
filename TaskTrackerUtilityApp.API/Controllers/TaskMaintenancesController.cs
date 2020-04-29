@@ -16,37 +16,33 @@ namespace TaskTrackerUtilityApp.API.Controllers
     {
         private readonly ITaskMaintenanceDataRepository _dataRepository;
 
-        public TaskMaintenancesController(TaskMaintenanceManager dataRepository)
+        public TaskMaintenancesController(ITaskMaintenanceDataRepository dataRepository)
         {
             _dataRepository = dataRepository;
         }
 
-        [HttpGet]
-        [Route("/api/TaskMaintenances")]
+        [HttpGet("/api/TaskMaintenances")]
         public IActionResult GetAllTasks()
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetAllTaskMaintenance();
             return Ok(tasks);
         }
 
-        [HttpGet]
-        [Route("/api/TaskMaintenances/{statusID}")]
+        [HttpGet("GetTasksByStatus/{status}")]
         public IActionResult GetTasksByStatusID(string status)
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByStatusID(status);
             return Ok(tasks);
         }
 
-        [HttpGet]
-        [Route("/api/TaskMaintenances/{userID}")]
+        [HttpGet("/api/TaskMaintenances/{userID}")]
         public IActionResult GetTasksByUserID(int userID)
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByUserID(userID);
             return Ok(tasks);
         }
                                
-        [HttpGet("{taskID}", Name = "Get")]
-        [Route("/api/TaskMaintenances/{taskID}")]
+        [HttpGet("/api/TaskMaintenances/{taskID}")]
         public IActionResult GetTaskByID(int taskID)
         {
             TaskMaintenance taskMaintenance = _dataRepository.GetTaskByID(taskID);
