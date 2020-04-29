@@ -14,39 +14,42 @@ namespace TaskTrackerUtilityApp.API.Controllers
     [ApiController]
     public class TaskMaintenancesController : ControllerBase
     {
-        private readonly TaskMaintenanceManager _dataRepository;
+        private readonly ITaskMaintenanceDataRepository _dataRepository;
 
-        public TaskMaintenancesController(ITaskMaintenanceDataRepository dataRepository)
+        public TaskMaintenancesController(TaskMaintenanceManager dataRepository)
         {
             _dataRepository = dataRepository;
         }
 
-        // GET: api/User
         [HttpGet]
-        public IActionResult Get()
+        [Route("/api/TaskMaintenances")]
+        public IActionResult GetAllTasks()
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetAllTaskMaintenance();
             return Ok(tasks);
         }
 
         [HttpGet]
-        public IActionResult GetTasksByStatusID(string statusID)
+        [Route("/api/TaskMaintenances/{statusID}")]
+        public IActionResult GetTasksByStatusID(string status)
         {
-            IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByStatusID(statusID);
+            IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByStatusID(status);
             return Ok(tasks);
         }
 
         [HttpGet]
-        public IActionResult GetTasksByGetTasksForUser(int userID)
+        [Route("/api/TaskMaintenances/{userID}")]
+        public IActionResult GetTasksByUserID(int userID)
         {
-            IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTaskByUserID(userID);
+            IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByUserID(userID);
             return Ok(tasks);
         }
-        // GET: api/User/5                         
+                               
         [HttpGet("{taskID}", Name = "Get")]
-        public IActionResult Get(int taskID)
+        [Route("/api/TaskMaintenances/{taskID}")]
+        public IActionResult GetTaskByID(int taskID)
         {
-            TaskMaintenance taskMaintenance = _dataRepository.GetTaskMaintenance(taskID);
+            TaskMaintenance taskMaintenance = _dataRepository.GetTaskByID(taskID);
 
             if (taskMaintenance == null)
             {
@@ -56,7 +59,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
             return Ok(taskMaintenance);
         }
 
-        // POST: api/User
+        
         [HttpPost]
         public IActionResult Post([FromBody] TaskMaintenance taskMaintenance)
         {
@@ -72,8 +75,8 @@ namespace TaskTrackerUtilityApp.API.Controllers
                   taskMaintenance);
         }
 
-        // PUT: api/User/5
-        [HttpPut("{id}")]
+        
+        [HttpPut("{taskID}")]
         public IActionResult Put(int taskId, [FromBody] TaskMaintenance taskMaintenance)
         {
             if (taskMaintenance == null)
@@ -81,7 +84,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
                 return BadRequest("The task couldn't be found.");
             }
 
-            TaskMaintenance updateTask = _dataRepository.GetTaskMaintenance(taskId);
+            TaskMaintenance updateTask = _dataRepository.GetTaskByID(taskId);
             if (updateTask == null)
             {
                 return NotFound("The task couldn't be found.");
@@ -91,11 +94,11 @@ namespace TaskTrackerUtilityApp.API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/User/5
-        [HttpDelete("{id}")]
+        
+        [HttpDelete("{taskID}")]
         public IActionResult Delete(int taskID)
         {
-            TaskMaintenance taskMaintenance = _dataRepository.GetTaskMaintenance(taskID);
+            TaskMaintenance taskMaintenance = _dataRepository.GetTaskByID(taskID);
             if (taskMaintenance == null)
             {
                 return NotFound("The task couldn't be found.");
