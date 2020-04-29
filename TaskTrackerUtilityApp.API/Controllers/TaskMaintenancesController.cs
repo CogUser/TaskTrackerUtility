@@ -21,28 +21,28 @@ namespace TaskTrackerUtilityApp.API.Controllers
             _dataRepository = dataRepository;
         }
 
-        [HttpGet("/api/TaskMaintenances")]
+        [HttpGet("/api/GetAllTasks")]
         public IActionResult GetAllTasks()
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetAllTaskMaintenance();
             return Ok(tasks);
         }
 
-        [HttpGet("GetTasksByStatus/{status}")]
+        [HttpGet("/api/GetTasksByStatus/{status}")]
         public IActionResult GetTasksByStatusID(string status)
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByStatusID(status);
             return Ok(tasks);
         }
 
-        [HttpGet("/api/TaskMaintenances/{userID}")]
+        [HttpGet("/api/GetTasksByUserID/{userID}")]
         public IActionResult GetTasksByUserID(int userID)
         {
             IEnumerable<TaskMaintenance> tasks = _dataRepository.GetTasksByUserID(userID);
             return Ok(tasks);
         }
                                
-        [HttpGet("/api/TaskMaintenances/{taskID}")]
+        [HttpGet("/api/GetTaskByID/{taskID}")]
         public IActionResult GetTaskByID(int taskID)
         {
             TaskMaintenance taskMaintenance = _dataRepository.GetTaskByID(taskID);
@@ -65,10 +65,8 @@ namespace TaskTrackerUtilityApp.API.Controllers
             }
 
             _dataRepository.AddTaskMaintenance(taskMaintenance);
-            return CreatedAtRoute(
-                  "Get",
-                  new { Id = taskMaintenance.TaskId },
-                  taskMaintenance);
+            return GetAllTasks();
+
         }
 
         
@@ -86,7 +84,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
                 return NotFound("The task couldn't be found.");
             }
 
-            _dataRepository.UpdateTaskMaintenance(updateTask, taskMaintenance);
+            _dataRepository.UpdateTaskMaintenance(taskMaintenance,updateTask);
             return NoContent();
         }
 
