@@ -10,8 +10,8 @@ using TaskTrackerUtilityApp.API.Data;
 namespace TaskTrackerUtilityApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200428132152_ModifiedUserEntity")]
-    partial class ModifiedUserEntity
+    [Migration("20200428183535_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,6 +75,69 @@ namespace TaskTrackerUtilityApp.API.Migrations
                     b.ToTable("TaskAttachments");
                 });
 
+            modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.TaskMaintenance", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ActualEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ActualStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AssignedTo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Assignee")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PlannedEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PlannedStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Priority")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Progress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaskSummary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Watchers")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("TaskMaintenance");
+                });
+
             modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -90,12 +153,6 @@ namespace TaskTrackerUtilityApp.API.Migrations
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");

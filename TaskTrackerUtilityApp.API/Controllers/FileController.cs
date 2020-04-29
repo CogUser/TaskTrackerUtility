@@ -23,37 +23,37 @@ namespace TaskTrackerUtilityApp.API.Controllers
             _unitOfWork = unitOfWork;     
             _taskAttachmentRepository = taskAttachmentRepository;
         }
-        
-    public IActionResult Upload()
-    {
-        try
+
+        protected IActionResult Upload()
         {
-            var files = Request.Form.Files;
-            var folderName = Path.Combine("Resources","Attachments");
-            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
-            if(files.Any(f => f.Length == 0))
+            try
             {
-                return BadRequest();
-            }
+                var files = Request.Form.Files;
+                var folderName = Path.Combine("Resources", "Attachments");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
-            foreach(var file in files)
-            {
-                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.ToString().Replace("\"",string.Empty);
-                var fullPath = Path.Combine(pathToSave, fileName);
-                var dbPath = Path.Combine(folderName, fileName); 
- 
-                using (var stream = new FileStream(fullPath, FileMode.Create))
+                if (files.Any(f => f.Length == 0))
                 {
-                    file.CopyTo(stream);
+                    return BadRequest();
                 }
+
+                foreach (var file in files)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.ToString().Replace("\"", string.Empty);
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                return Ok("All the files are successfully uploaded.");
             }
-            return Ok("All the files are successfully uploaded.");
-        }   
-        catch (Exception)
+            catch (Exception)
             {
-            return StatusCode(500, "Internal server error");
+                return StatusCode(500, "Internal server error");
+            }
         }
-    }
     }
 }

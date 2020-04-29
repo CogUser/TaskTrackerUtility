@@ -3,6 +3,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Models\DataManager\**" />
+    <Compile Remove="Models\Repository\**" />
+    <Content Remove="Models\DataManager\**" />
+    <Content Remove="Models\Repository\**" />
+    <EmbeddedResource Remove="Models\DataManager\**" />
+    <EmbeddedResource Remove="Models\Repository\**" />
+    <None Remove="Models\DataManager\**" />
+    <None Remove="Models\Repository\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Controllers\ValuesController.cs" />
   </ItemGroup>
   <ItemGroup>
