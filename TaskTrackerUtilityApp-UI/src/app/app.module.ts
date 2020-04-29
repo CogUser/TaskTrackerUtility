@@ -36,6 +36,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ConfirmationDialog } from './shared/ConfirmationDialog';
+import { TasksComponent } from './tasks/pages/tasks.component';
 
 @NgModule({
    declarations: [
@@ -51,7 +52,8 @@ import { ConfirmationDialog } from './shared/ConfirmationDialog';
       UserComponent,
       NavComponent,
       FileUploadComponent,
-      ConfirmationDialog
+      ConfirmationDialog,
+      TasksComponent
    ],
    imports: [
       BrowserModule,
