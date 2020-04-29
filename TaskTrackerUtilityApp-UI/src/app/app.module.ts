@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -15,6 +15,12 @@ import { LineChartContainer } from './linechart/pages/linechart-container';
 import { NavComponent } from './nav/pages/nav.component';
 import { UserComponent } from './user/pages/user.component';
 import { AgGridModule } from 'ag-grid-angular';
+import {MatTableModule} from '@angular/material/table';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthService } from './_services/auth.service';
@@ -23,6 +29,13 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { environment} from '../environments/environment';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ConfirmationDialog } from './shared/ConfirmationDialog';
 
 @NgModule({
    declarations: [
@@ -34,12 +47,15 @@ import { environment} from '../environments/environment';
       LineChartContainer,
       UserComponent,
       NavComponent,
-      FileUploadComponent
+      FileUploadComponent,
+      UserComponent,
+      NavComponent,
+      FileUploadComponent,
+      ConfirmationDialog
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
-      BrowserAnimationsModule,
       DashboardModule,
       FormsModule,
       AgGridModule.withComponents([]),
@@ -47,7 +63,20 @@ import { environment} from '../environments/environment';
       AppRoutingModule,
       NgxFileDropModule,
       AngularFireModule.initializeApp(environment.firebaseConfig),
-      AngularFireStorageModule
+      AngularFireStorageModule,
+      MatGridListModule,
+      MatTableModule,
+      MatIconModule,
+      MatButtonModule,
+      MatDialogModule,
+      MatFormFieldModule,
+      ReactiveFormsModule,
+      MatCardModule,
+      MatInputModule,
+      FlexLayoutModule,
+      MatCheckboxModule,
+      MatSelectModule,
+      MatSnackBarModule
    ],
    providers: [
       ChartService,
@@ -58,7 +87,8 @@ import { environment} from '../environments/environment';
    ],
    entryComponents: [
       BarChartContainer,
-      LineChartContainer
+      LineChartContainer,
+      ConfirmationDialog
    ]
 })
 export class AppModule { }
