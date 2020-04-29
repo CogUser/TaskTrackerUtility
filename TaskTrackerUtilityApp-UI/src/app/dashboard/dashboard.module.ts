@@ -5,10 +5,11 @@ import { DashboardOutletDirective } from './dashboard-outlet.directive';
 import { MatCardModule } from '@angular/material/card';
 import { DashboardCardComponent } from './pages/dashboard-card/dashboard-card.component';
 import { DashboardCardContainer } from './pages/dashboard-card/dashboard-card.container';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   imports: [
-    CommonModule, MatCardModule
+    CommonModule, MatCardModule, MatGridListModule
   ],
   declarations: [DashboardComponent, DashboardOutletDirective, DashboardCardComponent, DashboardCardContainer],
   exports: [DashboardComponent]

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Data.Common;
+using System.Runtime.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,11 +15,11 @@ namespace TaskTrackerUtilityApp.API.Models
 		public string TaskSummary { get; set; }
 		public string TaskDescription { get; set; }
 		public int Assignee { get; set; }
-		public int AssignedTo { get; set; }
+		public int? AssignedTo { get; set; }
 		public DateTime PlannedStartDate { get; set; }
 		public DateTime PlannedEndDate { get; set; }
-		public DateTime ActualStartDate { get; set; }
-		public DateTime ActualEndDate { get; set; }
+		public DateTime? ActualStartDate { get; set; }
+		public DateTime? ActualEndDate { get; set; }
 		public string Status { get; set; }
 		public string Priority { get; set; }
 		public string Progress { get; set; }
