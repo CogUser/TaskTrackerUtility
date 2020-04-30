@@ -29,5 +29,6 @@ namespace TaskTrackerUtilityApp.API.Models
 		public DateTime CreatedDateTime { get; set; }
 		public DateTime ModifiedDateTime { get; set; }
 		public int UserId { get; set; }
+		public ICollection<TaskAttachment> TaskAttachments { get; set; } 
     }
 }
