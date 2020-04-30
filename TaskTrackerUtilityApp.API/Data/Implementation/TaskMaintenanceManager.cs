@@ -19,11 +19,11 @@ namespace TaskTrackerUtilityApp.API.Data
     {
         readonly DataContext _dbContext;
 
-        public TaskMaintenanceManager(DataContext dbContext)
+        public TaskMaintenanceManager(DataContext context)
         {
-            _dbContext = dbContext;
+            _dbContext = context;
         }
-
+        
         public void AddTaskMaintenance(TaskMaintenance taskMaintenance)
         {
             _dbContext.TaskMaintenance.Add(taskMaintenance);
@@ -50,7 +50,22 @@ namespace TaskTrackerUtilityApp.API.Data
 
         public void UpdateTaskMaintenance(TaskMaintenance taskMaintenance, TaskMaintenance newtaskMaintenance)
         {
-            taskMaintenance = newtaskMaintenance;
+            taskMaintenance.TaskId = taskMaintenance.TaskId;
+            taskMaintenance.UserId = newtaskMaintenance.UserId;
+            taskMaintenance.Status = newtaskMaintenance.Status;
+            taskMaintenance.ActualEndDate = newtaskMaintenance.ActualEndDate;
+            taskMaintenance.PlannedStartDate = newtaskMaintenance.PlannedStartDate;
+            taskMaintenance.PlannedEndDate = newtaskMaintenance.PlannedEndDate;
+            taskMaintenance.ActualStartDate = newtaskMaintenance.ActualStartDate;
+            taskMaintenance.AssignedTo = newtaskMaintenance.AssignedTo;
+            taskMaintenance.Assignee = newtaskMaintenance.Assignee;
+            taskMaintenance.ModifiedBy = newtaskMaintenance.ModifiedBy;
+            taskMaintenance.ModifiedDateTime = newtaskMaintenance.ModifiedDateTime;
+            taskMaintenance.Priority = newtaskMaintenance.Priority;
+            taskMaintenance.Progress = newtaskMaintenance.Progress;
+            taskMaintenance.TaskDescription = newtaskMaintenance.TaskDescription;
+            taskMaintenance.TaskSummary = newtaskMaintenance.TaskSummary;
+            taskMaintenance.Watchers = newtaskMaintenance.Watchers;
             _dbContext.SaveChanges();
         }
         public IEnumerable<TaskMaintenance> GetTasksByUserID(int userID)
