@@ -1,3 +1,6 @@
+using System.Net;
+using System.Runtime.CompilerServices;
+using System.Net.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +11,8 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using TaskTrackerUtilityApp.API.Data;
 using TaskTrackerUtilityApp.API.Models;
+using TaskTrackerUtilityApp.API.DTO;
+using AutoMapper;
 
 namespace TaskTrackerUtilityApp.API.Controllers
 {
@@ -17,43 +22,37 @@ namespace TaskTrackerUtilityApp.API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private ITaskAttachmentRepository _taskAttachmentRepository;
+        private readonly IMapper _mapper;
 
-        public FileController(IUnitOfWork unitOfWork, ITaskAttachmentRepository taskAttachmentRepository)
+        public FileController(IUnitOfWork unitOfWork, ITaskAttachmentRepository taskAttachmentRepository, IMapper mapper)
         {
             _unitOfWork = unitOfWork;     
             _taskAttachmentRepository = taskAttachmentRepository;
+            _mapper = mapper;
         }
 
-        protected IActionResult Upload()
+        [HttpPost]
+        public IActionResult AddAttachment([FromBody] TaskAttachmentDTO taskAttachment)
         {
-            try
-            {
-                var files = Request.Form.Files;
-                var folderName = Path.Combine("Resources", "Attachments");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            var attachment = _mapper.Map<TaskAttachment>(taskAttachment);
+            attachment.IsActive = true;
+            attachment.CreatedDateTime = DateTime.Now;
+            attachment.CreatedUser = "TaskAppUser"; //To Do:pass username
 
-                if (files.Any(f => f.Length == 0))
-                {
-                    return BadRequest();
-                }
+            _taskAttachmentRepository.Create(attachment);
+            _unitOfWork.Commit();
+            return Ok();
+        }
 
-                foreach (var file in files)
-                {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.ToString().Replace("\"", string.Empty);
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
-
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-                }
-                return Ok("All the files are successfully uploaded.");
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Internal server error");
-            }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAttachment(int id)
+        {
+            var attachment = _taskAttachmentRepository.FindByCondition(m=> m.Id == id).FirstOrDefault();
+            if(attachment != null){
+                _taskAttachmentRepository.Delete(attachment);
+                _unitOfWork.Commit();
+            }        
+            return Ok();
         }
     }
 }
