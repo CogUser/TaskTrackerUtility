@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using System.Transactions;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using TaskTrackerUtilityApp.API.Models.DataManager;
 using TaskTrackerUtilityApp.API.Models.Repository;
+using AutoMapper;
 
 namespace TaskTrackerUtilityApp.API
 {
@@ -42,7 +44,8 @@ namespace TaskTrackerUtilityApp.API
             services.AddSwaggerGen(c =>
              c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Task Tracker API", Version = "v1" }));
             services.AddControllers();
-            services.ConfigureCors();          
+            services.ConfigureCors();  
+            services.AddAutoMapper(typeof(TaskAttachmentRepository).Assembly);        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
