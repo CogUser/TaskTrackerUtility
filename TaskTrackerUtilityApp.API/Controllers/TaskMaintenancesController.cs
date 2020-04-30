@@ -71,14 +71,14 @@ namespace TaskTrackerUtilityApp.API.Controllers
 
         
         [HttpPut("{taskID}")]
-        public IActionResult Put(int taskId, [FromBody] TaskMaintenance taskMaintenance)
+        public IActionResult Put(int taskID, [FromBody] TaskMaintenance taskMaintenance)
         {
             if (taskMaintenance == null)
             {
                 return BadRequest("The task couldn't be found.");
             }
 
-            TaskMaintenance updateTask = _dataRepository.GetTaskByID(taskId);
+            TaskMaintenance updateTask = _dataRepository.GetTaskByID(taskMaintenance.TaskId);
             if (updateTask == null)
             {
                 return NotFound("The task couldn't be found.");
