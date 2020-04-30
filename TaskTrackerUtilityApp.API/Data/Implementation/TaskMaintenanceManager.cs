@@ -10,6 +10,12 @@ namespace TaskTrackerUtilityApp.API.Data
     {
         readonly DataContext _dbContext;
 
+        public TaskMaintenanceManager(DataContext context)
+        {
+            _dbContext = context;
+        }
+
+
         public void AddTaskMaintenance(TaskMaintenance taskMaintenance)
         {
             _dbContext.TaskMaintenance.Add(taskMaintenance);

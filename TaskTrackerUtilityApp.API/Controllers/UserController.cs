@@ -22,9 +22,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
         [HttpGet]
         public IActionResult GetUsers()
         {
-            //int a = 1;
-            //int b = 0;
-            //int c = a / b;
+            
             IEnumerable<User> users = _dataRepository.GetAll();
             foreach (User U in users)
             {
@@ -33,10 +31,9 @@ namespace TaskTrackerUtilityApp.API.Controllers
 
             return Ok(users);
         }
-
+       
         // GET: api/User/5
         [HttpGet("{id}")]
-
         public IActionResult GetUser(int id)
         {
             User user = _dataRepository.Get(id);

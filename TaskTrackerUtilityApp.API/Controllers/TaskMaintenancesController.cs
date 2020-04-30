@@ -16,7 +16,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
     {
         private readonly ITaskMaintenanceDataRepository _dataRepository;
 
-        public TaskMaintenancesController(TaskMaintenanceManager dataRepository)
+        public TaskMaintenancesController(ITaskMaintenanceDataRepository dataRepository)
         {
             _dataRepository = dataRepository;
         }
@@ -45,7 +45,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
             return Ok(tasks);
         }
                                
-        [HttpGet("{taskID}", Name = "Get")]
+        [HttpGet]
         [Route("/api/TaskMaintenances/{taskID}")]
         public IActionResult GetTaskByID(int taskID)
         {
