@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ChartData } from '../models/chartData';
+import { TaskCountByStatus } from '../models/taskCountByStatus';
 import { Observable } from 'rxjs';
 import { Constants } from '../../constants';
 
@@ -9,12 +9,12 @@ import { Constants } from '../../constants';
 })
 export class ChartService {
 
-url = Constants.CHART_API_URL;
+url = Constants.TASK_STATUS_API_URL;
 
 constructor(private http: HttpClient) { }
 
-public getChartData(): Observable<ChartData[]> {
-  return this.http.get<ChartData[]>(this.url);
+public getChartData(): Observable<TaskCountByStatus[]> {
+  return this.http.get<TaskCountByStatus[]>(this.url);
 }
 
 }

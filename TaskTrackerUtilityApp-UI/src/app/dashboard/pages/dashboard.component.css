@@ -1,0 +1,17 @@
+.div1
+{
+    position: relative;
+    border: 1px solid;
+    /*background-color;*/
+    height: 24px;
+    padding: 3px;
+    margin: 6px 2px 0 16px;
+    -ms-flex: auto; /* IE 10 */
+    flex: auto;
+}
+
+.main-container
+{
+    display: -ms-flexbox; /* IE 10 */
+    display: flex;
+}

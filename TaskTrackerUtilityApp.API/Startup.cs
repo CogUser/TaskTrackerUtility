@@ -19,7 +19,6 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using TaskTrackerUtilityApp.API.Models.DataManager;
 using TaskTrackerUtilityApp.API.Models.Repository;
 
-
 namespace TaskTrackerUtilityApp.API
 {
     public class Startup

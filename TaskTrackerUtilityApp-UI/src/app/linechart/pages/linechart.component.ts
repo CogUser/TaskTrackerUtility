@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartData } from '../models/chartData';
+import { TaskCountByProgress } from '../models/taskCountByProgress';
 import { ChartService } from '../services/chart.service';
 import * as Chart from 'chart.js';
 
@@ -10,25 +10,25 @@ import * as Chart from 'chart.js';
 })
 export class LinechartComponent implements OnInit {
 
-  player = [];
-  run = [];
+  taskProgress = [];
+  taskCountByProgress = [];
   linechart: Chart;
 
   constructor(private chartService: ChartService) { }
 
   ngOnInit() {
-    this.chartService.getChartData().subscribe((chartData: ChartData[]) => {
+    this.chartService.getChartData().subscribe((chartData: TaskCountByProgress[]) => {
       chartData.forEach(item => {
-      this.player.push(item.playerName);
-      this.run.push(item.run);
+      this.taskProgress.push(item.taskProgress.toString() + '%');
+      this.taskCountByProgress.push(item.taskCountByProgress);
     });
       this.linechart = new Chart('canvas', {
       type: 'line',
       data: {
-        labels: this.player,
+        labels: this.taskProgress,
         datasets: [
           {
-            data: this.run,
+            data: this.taskCountByProgress,
             borderColor: '#3cb371',
             backgroundColor: '#0000FF'
           }
@@ -40,10 +40,25 @@ export class LinechartComponent implements OnInit {
         },
         scales: {
           xAxes: [{
-            display: true
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Completion percentage'
+            },
+          gridLines: {
+            display: false,
+            drawBorder: false
+         }
           }],
           yAxes: [{
-            display: true
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Task Count'
+            },
+            ticks: {
+              beginAtZero: true
+          }
           }]
         }
       }

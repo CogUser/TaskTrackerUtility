@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskTrackerUtilityApp.API.Models;
+using TaskTrackerUtilityApp.API.DTO;
 
 namespace TaskTrackerUtilityApp.API.Data
 {
@@ -15,7 +16,8 @@ namespace TaskTrackerUtilityApp.API.Data
         void DeleteTaskMaintenance(TaskMaintenance taskMaintenance);
         IEnumerable<TaskMaintenance> GetTasksByStatusID(string status);
         IEnumerable<TaskMaintenance> GetTasksByUserID(int userID);
-
+        IEnumerable<TaskStatusChartValues> GetTaskCountByStatus();
+        IEnumerable<TaskProgressChartValues> GetTaskCountByProgress();
     }
 
 }
