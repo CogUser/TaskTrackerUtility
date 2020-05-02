@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\TaskTrackerUtilityApp.API",
+    "\\TaskTrackerUtilityApp.API\\Controllers",
+    "\\TaskTrackerUtilityApp.API\\Data",
+    "\\TaskTrackerUtilityApp.API\\Data\\Contracts",
+    "\\TaskTrackerUtilityApp.API\\Data\\Implementation"
+  ],
+  "SelectedNode": "\\TaskTrackerUtilityApp.API\\TaskTrackerUtilityApp.API.sln",
+  "PreviewInSolutionExplorer": false
+}

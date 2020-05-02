@@ -10,8 +10,8 @@ using TaskTrackerUtilityApp.API.Data;
 namespace TaskTrackerUtilityApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200430105856_TaskAttachmentChanges")]
-    partial class TaskAttachmentChanges
+    [Migration("20200501212421_TaskTrackerUtilityApp.API.Data.RemoveToken")]
+    partial class TaskTrackerUtilityAppAPIDataRemoveToken
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,13 +46,22 @@ namespace TaskTrackerUtilityApp.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ContentType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnName("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnName("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnName("FileType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -64,18 +73,12 @@ namespace TaskTrackerUtilityApp.API.Migrations
                     b.Property<string>("LastModifiedUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TaskMaintenanceTaskId")
+                    b.Property<int>("TaskId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TaskMaintenanceTaskId");
+                    b.HasIndex("TaskId");
 
                     b.ToTable("TaskAttachments");
                 });
@@ -151,14 +154,12 @@ namespace TaskTrackerUtilityApp.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("EmailAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
@@ -194,7 +195,9 @@ namespace TaskTrackerUtilityApp.API.Migrations
                 {
                     b.HasOne("TaskTrackerUtilityApp.API.Models.TaskMaintenance", "TaskMaintenance")
                         .WithMany("TaskAttachments")
-                        .HasForeignKey("TaskMaintenanceTaskId");
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TaskTrackerUtilityApp.API.Models.User", b =>

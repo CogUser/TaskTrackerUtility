@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using TaskTrackerUtilityApp.API.Models;
 using TaskTrackerUtilityApp.API.Models.Repository;
 using TaskTrackerUtilityApp.API.Helpers;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TaskTrackerUtilityApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IDataRepository<User> _dataRepository;
-
 
         public UserController(IDataRepository<User> dataRepository)
         {
@@ -99,7 +105,6 @@ namespace TaskTrackerUtilityApp.API.Controllers
             _dataRepository.Delete(user);
             return NoContent();
         }
-
 
     }
 }

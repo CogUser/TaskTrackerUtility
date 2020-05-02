@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TaskTrackerUtilityApp.API.DTO;
 using TaskTrackerUtilityApp.API.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TaskTrackerUtilityApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DashboardController: ControllerBase
     {
         private readonly ITaskMaintenanceDataRepository _dataRepository;

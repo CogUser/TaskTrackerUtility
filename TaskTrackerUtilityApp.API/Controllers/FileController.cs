@@ -13,11 +13,13 @@ using TaskTrackerUtilityApp.API.Data;
 using TaskTrackerUtilityApp.API.Models;
 using TaskTrackerUtilityApp.API.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TaskTrackerUtilityApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FileController: ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
