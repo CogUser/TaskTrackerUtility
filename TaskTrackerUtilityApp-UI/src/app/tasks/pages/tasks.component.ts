@@ -10,6 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConfirmationDialog } from 'src/app/shared/ConfirmationDialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Task } from '../models/tasks';
+import { FileUploadModel, FileUploadedEventArgs } from 'src/app/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-tasks',
@@ -20,18 +21,19 @@ export class TasksComponent implements OnInit {
   showGrid = true;
   formMessage = '';
   isEdit = true;
+  displayAttachments = false;
+  uploadedAttachment: FileUploadModel;
   public formData: FormGroup;
   taskList: Task[] = [];
   dataSource = new MatTableDataSource(this.taskList);
   displayedColumns: string[] = ['taskSummary', 'assignee', 'assignedTo', 'plannedStartDate',
   'plannedEndDate','actualStartDate','actualEndDate','status','priority','progress','Actions'
   ];
-
-
+  selectedTaskId: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private http: HttpClient,private dialog: MatDialog) { }
+  constructor(private http: HttpClient,private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -43,6 +45,7 @@ export class TasksComponent implements OnInit {
         this.formMessage = "Create Task";
         this.showGrid = false;
         this.isEdit = false;
+        this.displayAttachments = false;
 
         this.formData = new FormGroup({
             taskId: new FormControl(0, [Validators.required, Validators.maxLength(15)]),
@@ -65,10 +68,36 @@ export class TasksComponent implements OnInit {
 
         });
     }
+    showAttachments(dataSelected: Task): void {
+      this.formMessage = 'Maintain Attachments';
+      this.isEdit = false;
+      this.showGrid = false;
+      this.displayAttachments = true;
+      this.selectedTaskId = dataSelected.taskId;
+    }
+
+    uploadedFileHandler(eventArgs: FileUploadedEventArgs) {
+      this.uploadedAttachment = eventArgs.attachment;
+      console.log(this.uploadedAttachment);
+    }
+
+    saveAttachment()
+    {
+      this.http.post(environment.apiUrl + 'File', this.uploadedAttachment).subscribe(data => {
+        this.snackBar.open('File Attached!', '', {
+            duration: 2000,
+          });
+        this.showGrid =  true;
+        this.getTasks();
+
+    });
+    }
+
     showEditOrAdd(dataSelected: Task): void {
       this.formMessage = 'Edit Task';
       this.isEdit = true;
       this.showGrid = false;
+      this.displayAttachments = false;
       this.formData = new FormGroup({
         taskId: new FormControl(0, [Validators.required, Validators.maxLength(15)]),
         taskSummary: new FormControl('', [Validators.required, Validators.maxLength(150)]),
@@ -92,7 +121,7 @@ export class TasksComponent implements OnInit {
       
   }
     getTasks() {
-      this.http.get<Task[]>(environment.apiUrl + '/GetAllTasks').subscribe(data => {
+      this.http.get<Task[]>(environment.apiUrl + 'GetAllTasks').subscribe(data => {
           this.taskList = data;
           this.reloadTable();
 
@@ -103,6 +132,9 @@ export class TasksComponent implements OnInit {
 }
 onCancel() {
   this.formData.reset();
+  this.showGrid = true;
+}
+onCancelUpload() {
   this.showGrid = true;
 }
 reloadTable() {

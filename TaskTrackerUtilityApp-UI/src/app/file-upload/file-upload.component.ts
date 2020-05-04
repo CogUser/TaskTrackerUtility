@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpClientModule, HttpClient , HttpEventType, HttpHeaders} from '@angular/common/http';
 import { observable } from 'rxjs';
 import { FormBuilder, FormGroup, NgModel } from  '@angular/forms';
@@ -16,6 +16,10 @@ export class FileUploadComponent implements OnInit {
 
 
   constructor(private http: HttpClient, private storage: AngularFireStorage) { }
+
+  // tslint:disable-next-line:no-input-rename
+  @Input('taskId') taskId: number;
+  @Output('uploadedFile') change = new EventEmitter();
 
   fileData: File = null;
 
@@ -55,11 +59,9 @@ upload(event) {
          this.model.fileName = this.filename;
          this.model.filePath = this.imageURL;
          this.model.fileType = this.Filetype;
-         this.model.taskId = 9;// To do: pass taskid from parent
-         this.http.post('http://localhost:5000/api/' + 'File', this.model).subscribe(data => {
-            console.log('Added file Attachment'); // environment.apiUrl
-          });
-     })
+         this.model.taskId = this.taskId;
+         this.change.emit({ attachment: this.model});
+     });
   })
   ).subscribe();
 
@@ -87,6 +89,11 @@ export class FileUploadModel {
   filePath: string;
   taskId: number;
 }
+
+export interface FileUploadedEventArgs {
+  attachment: FileUploadModel;
+}
+
 
 
 

@@ -16,17 +16,11 @@
     </tr>
     <tr>
       <td>
-        Comments:
+        Task Id:
       </td>
       <td>
-        <textarea #comment style="width: 100%;height: 90%;" rows="1" cols="10"></textarea>
+        {{ taskId }}
       </td>
-    </tr>
-    <tr>
-      <td style="center">
-        <button class="btn btn-success" (click)="onSubmit(comment.value)">Submit</button>
-      </td>
-       
     </tr>
   </table>
   <table *ngIf="SuccessDiv!=true">

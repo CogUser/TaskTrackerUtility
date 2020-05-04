@@ -100,7 +100,8 @@ import { ErrorDialogService } from './_services/error-dialog.service';
       BarChartContainer,
       LineChartContainer,
       ConfirmationDialog,
-      ErrorDialogComponent
+      ErrorDialogComponent,
+      FileUploadComponent
    ]
 })
 export class AppModule { }
