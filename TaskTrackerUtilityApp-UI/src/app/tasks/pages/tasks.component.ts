@@ -23,9 +23,8 @@ export class TasksComponent implements OnInit {
   public formData: FormGroup;
   taskList: Task[] = [];
   dataSource = new MatTableDataSource(this.taskList);
-  displayedColumns: string[] = ['taskSummary', 'taskDescription', 'assignee', 'assignedTo', 'plannedStartDate',
-  'plannedEndDate','actualStartDate','actualEndDate','status','priority','progress','createdBy',
-  'modifiedBy','createdDateTime','modifiedDateTime','userId'
+  displayedColumns: string[] = ['taskSummary', 'assignee', 'assignedTo', 'plannedStartDate',
+  'plannedEndDate','actualStartDate','actualEndDate','status','priority','progress','Actions'
   ];
 
 
@@ -49,7 +48,8 @@ export class TasksComponent implements OnInit {
             taskId: new FormControl(0, [Validators.required, Validators.maxLength(15)]),
             taskSummary: new FormControl('', [Validators.required, Validators.maxLength(150)]),
             taskDescription: new FormControl('', [Validators.required, Validators.maxLength(150)]),
-           // assignee: new FormControl('', [Validators.required, Validators.maxLength(150)]),
+            assignee: new FormControl('', [Validators.required, Validators.maxLength(150)]),
+            assignedTo: new FormControl('', [Validators.required, Validators.maxLength(150)]),
             plannedStartDate:new FormControl(),
             plannedEndDate:new FormControl(),
             actualStartDate:new FormControl(),
@@ -73,7 +73,8 @@ export class TasksComponent implements OnInit {
         taskId: new FormControl(0, [Validators.required, Validators.maxLength(15)]),
         taskSummary: new FormControl('', [Validators.required, Validators.maxLength(150)]),
         taskDescription: new FormControl('', [Validators.required, Validators.maxLength(150)]),
-       // assignee: new FormControl('', [Validators.required, Validators.maxLength(150)]),
+        assignee: new FormControl('', [Validators.required, Validators.maxLength(150)]),
+        assignedTo: new FormControl('', [Validators.required, Validators.maxLength(150)]),
         plannedStartDate:new FormControl(),
         plannedEndDate:new FormControl(),
         actualStartDate:new FormControl(),
@@ -91,7 +92,7 @@ export class TasksComponent implements OnInit {
       
   }
     getTasks() {
-      this.http.get<Task[]>(environment.apiUrl + '/TaskMaintenances').subscribe(data => {
+      this.http.get<Task[]>(environment.apiUrl + '/GetAllTasks').subscribe(data => {
           this.taskList = data;
           this.reloadTable();
 

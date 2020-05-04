@@ -10,10 +10,10 @@
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
   
-    <ng-container matColumnDef="taskDescription">
+    <!-- <ng-container matColumnDef="taskDescription">
       <th mat-header-cell *matHeaderCellDef> Task Name </th>
       <td mat-cell *matCellDef="let element"> {{element.taskDescription}} </td>
-    </ng-container>
+    </ng-container> -->
   
     <ng-container matColumnDef="taskSummary">
       <th mat-header-cell *matHeaderCellDef> Task Summary </th>
@@ -30,20 +30,20 @@
     </ng-container>
     <ng-container matColumnDef="plannedStartDate">
       <th mat-header-cell *matHeaderCellDef> PlannedStartDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.plannedStartDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.plannedStartDate| date: 'dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="plannedEndDate">
       <th mat-header-cell *matHeaderCellDef> PlannedEndDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.plannedEndDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.plannedEndDate| date: 'dd/MM/yyyy'}} </td>
     </ng-container>
     <ng-container matColumnDef="actualStartDate">
       <th mat-header-cell *matHeaderCellDef> ActualStartDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.actualStartDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.actualStartDate| date: 'dd/MM/yyyy'}} </td>
     </ng-container>
     <ng-container matColumnDef="actualEndDate">
       <th mat-header-cell *matHeaderCellDef> ActualEndDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.actualEndDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.actualEndDate| date: 'dd/MM/yyyy'}} </td>
     </ng-container>
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
@@ -58,26 +58,26 @@
       <td mat-cell *matCellDef="let element"> {{element.progress}} </td>
     </ng-container>
      
-    <ng-container matColumnDef="createdBy">
+    <!-- <ng-container matColumnDef="createdBy">
       <th mat-header-cell *matHeaderCellDef> CreatedBy </th>
       <td mat-cell *matCellDef="let element"> {{element.createdBy}} </td>
     </ng-container>
     <ng-container matColumnDef="modifiedBy">
       <th mat-header-cell *matHeaderCellDef> ModifiedBy </th>
       <td mat-cell *matCellDef="let element"> {{element.modifiedBy}} </td>
-    </ng-container>
-    <ng-container matColumnDef="createdDateTime">
+    </ng-container> -->
+    <!-- <ng-container matColumnDef="createdDateTime">
       <th mat-header-cell *matHeaderCellDef> CreatedDateTime </th>
-      <td mat-cell *matCellDef="let element"> {{element.createdDateTime}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.createdDateTime| date: 'dd/MM/yyyy'}} </td>
     </ng-container>
     <ng-container matColumnDef="modifiedDateTime">
       <th mat-header-cell *matHeaderCellDef> ModifiedDateTime </th>
-      <td mat-cell *matCellDef="let element"> {{element.modifiedDateTime}} </td>
-    </ng-container>
-    <ng-container matColumnDef="userId">
+      <td mat-cell *matCellDef="let element"> {{element.modifiedDateTime| date: 'dd/MM/yyyy'}} </td>
+    </ng-container> -->
+    <!-- <ng-container matColumnDef="userId">
       <th mat-header-cell *matHeaderCellDef> UserId </th>
       <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
-    </ng-container> 
+    </ng-container>  -->
 
     <ng-container matColumnDef="Actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
@@ -101,74 +101,73 @@
 
 
   <section *ngIf="!showGrid" fxLayout="row wrap" fxLayoutAlign="center center">
-    <mat-card fxFlex="500px" fxFlex.xs="90%">
+    <mat-card fxFlex="800px" fxFlex.xs="90%">
         <mat-card-title>{{formMessage}}</mat-card-title>
         <form [formGroup]="formData" autocomplete="off" novalidate (ngSubmit)="formSubmit(formData.value)" fxLayout="column wrap"
       fxLayoutAlign="center center" fxLayoutGap="10px">
   <mat-card-content>
     <mat-form-field>
-        <input matInput type="text" placeholder="taskSummary" formControlName="taskSummary" id="taskSummary">
+        <input matInput type="text" placeholder="Summary" formControlName="taskSummary" id="taskSummary">
         <mat-hint align="end">Not more then 15 characters long.</mat-hint>
-        <mat-error *ngIf="hasError('taskSummary', 'required')">taskSummary is required</mat-error>
+        <mat-error *ngIf="hasError('taskSummary', 'required')">Summary is required</mat-error>
          
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="taskDescription" formControlName="taskDescription" id="taskDescription">
-        <mat-error *ngIf="hasError('taskDescription', 'required')">taskDescription is required</mat-error>
+        <textarea matInput type="text" placeholder="Description" formControlName="taskDescription" id="taskDescription"></textarea>
+        <mat-error *ngIf="hasError('taskDescription', 'required')">Description is required</mat-error>
       
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="assignee" formControlName="assignee" id="assignee">
-        <mat-error *ngIf="hasError('assignee', 'required')">assignee is required</mat-error>
+        <input matInput type="text" placeholder="Assignee" formControlName="assignee" id="assignee">
+        <mat-error *ngIf="hasError('assignee', 'required')">Assignee is required</mat-error>
       
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="assignedTo" formControlName="assignedTo" id="assignedTo">
+        <input matInput type="text" placeholder="Assigned To" formControlName="assignedTo" id="assignedTo">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="plannedStartDate" formControlName="plannedStartDate" id="plannedStartDate">
+        <input matInput type="datetime" placeholder="Planned Start Date" formControlName="plannedStartDate" id="plannedStartDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="plannedEndDate" formControlName="plannedEndDate" id="plannedEndDate">
+        <input matInput type="datetime" placeholder="Planned End Date" formControlName="plannedEndDate" id="plannedEndDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="actualStartDate" formControlName="actualStartDate" id="actualStartDate">
+        <input matInput type="datetime" placeholder="Actual Start Date" formControlName="actualStartDate" id="actualStartDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="actualEndDate" formControlName="actualEndDate" id="actualEndDate">
+        <input matInput type="datetime" placeholder="Actual End Date" formControlName="actualEndDate" id="actualEndDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="status" formControlName="status" id="status">
-        <mat-error *ngIf="hasError('status', 'required')">status is required</mat-error>
+        <input matInput type="text" placeholder="Status" formControlName="status" id="status">
+        <mat-error *ngIf="hasError('status', 'required')">Status is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="priority" formControlName="priority" id="priority">
+        <input matInput type="text" placeholder="Priority" formControlName="priority" id="priority">
         <mat-error *ngIf="hasError('priority', 'required')">priority is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="number" placeholder="progress" formControlName="progress" id="progress">
-        <mat-error *ngIf="hasError('progress', 'required')">progress is required</mat-error>
+        <input matInput type="number" placeholder="Progress" formControlName="progress" id="progress">
+        <mat-error *ngIf="hasError('progress', 'required')">Progress is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="createdBy" formControlName="createdBy" id="createdBy">
-        <mat-error *ngIf="hasError('createdBy', 'required')">createdBy is required</mat-error>
+        <input matInput type="text" placeholder="Created By" formControlName="createdBy" id="createdBy">
+        <mat-error *ngIf="hasError('createdBy', 'required')">Created By" is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="modifiedBy" formControlName="modifiedBy" id="modifiedBy">
+        <input matInput type="text" placeholder="Modified By" formControlName="modifiedBy" id="modifiedBy">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="createdDateTime" formControlName="createdDateTime" id="createdDateTime">
-        <mat-error *ngIf="hasError('createdDateTime', 'required')">createdDateTime is required</mat-error>
+        <input matInput type="datetime" placeholder="Created Date Time" formControlName="createdDateTime" id="createdDateTime">
+        <mat-error *ngIf="hasError('createdDateTime', 'required')">Created Date Time is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="modifiedDateTime" formControlName="modifiedDateTime" id="modifiedDateTime">
-        <mat-error *ngIf="hasError('modifiedDateTime', 'required')">modifiedDateTime is required</mat-error>
+        <input matInput type="datetime" placeholder="Modified Date Time" formControlName="modifiedDateTime" id="modifiedDateTime">
       </mat-form-field>
 
       <!-- <mat-form-field *ngIf="!isEdit">
