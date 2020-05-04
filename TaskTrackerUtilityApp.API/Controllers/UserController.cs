@@ -94,6 +94,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
+       // [Authorize(Roles = AuthenticateRole.Admin)]
         public IActionResult DeleteUser(int id)
         {
             User user = _dataRepository.Get(id);
