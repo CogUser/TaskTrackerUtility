@@ -109,7 +109,6 @@
           <mat-card-title>{{formMessage}}</mat-card-title>
           <mat-card-content>
             <app-file-upload [taskId] = "selectedTaskId" (uploadedFile)="uploadedFileHandler($event)"></app-file-upload>
-            {{ uploadedAttachment?.fileName }}
           </mat-card-content>
           <mat-card-actions align="center">
             <button mat-raised-button color="primary" [disabled]="uploadedAttachment == null" (click)="saveAttachment()">Save</button>

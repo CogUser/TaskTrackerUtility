@@ -60,6 +60,7 @@ upload(event) {
          this.model.filePath = this.imageURL;
          this.model.fileType = this.Filetype;
          this.model.taskId = this.taskId;
+         this.SuccessDiv = false;
          this.change.emit({ attachment: this.model});
      });
   })
@@ -67,17 +68,6 @@ upload(event) {
 
   const task =   ref.put(event.target.files[0]);
   this.uploadProgress = task.percentageChanges();
-}
-
-onSubmit(comment: string) {
-console.log(this.imageURL);
-console.log(comment);
-this.SuccessDiv = false;
-
-
-this.http.post<any>('', JSON.stringify(this.model)).subscribe(data => {
-});
-
 }
 
 }

@@ -88,6 +88,7 @@ export class TasksComponent implements OnInit {
             duration: 2000,
           });
         this.showGrid =  true;
+        this.displayAttachments = false;
         this.getTasks();
 
     });
@@ -133,9 +134,11 @@ export class TasksComponent implements OnInit {
 onCancel() {
   this.formData.reset();
   this.showGrid = true;
+  this.displayAttachments = false;
 }
 onCancelUpload() {
   this.showGrid = true;
+  this.displayAttachments = false;
 }
 reloadTable() {
   this.dataSource = new MatTableDataSource(this.taskList);
@@ -176,6 +179,7 @@ showDeleteConfirmation(task:Task) {
           //   });  
            this.showGrid =  true;
           this.getTasks();
+          this.displayAttachments = false;
 
       }); 
     }
