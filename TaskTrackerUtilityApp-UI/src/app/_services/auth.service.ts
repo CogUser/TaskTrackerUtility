@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Constants } from '../constants';
+import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AuthService {
 constructor(private http: HttpClient) { }
 
 login(model: any) {
-  return this.http.post(Constants.AUTH_API_URL + 'Authenticate', model)
+  return this.http.post(environment.apiUrl + 'login/Authenticate', model)
   .pipe(
     map((response: any) => {
       const user = response;

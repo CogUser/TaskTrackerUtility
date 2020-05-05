@@ -108,7 +108,9 @@
       <mat-card fxFlex="800px" fxFlex.xs="90%">
           <mat-card-title>{{formMessage}}</mat-card-title>
           <mat-card-content>
+            <div *ngIf ="selectedTaskId">
             <app-file-upload [taskId] = "selectedTaskId" (uploadedFile)="uploadedFileHandler($event)"></app-file-upload>
+            </div>
           </mat-card-content>
           <mat-card-actions align="center">
             <button mat-raised-button color="primary" [disabled]="uploadedAttachment == null" (click)="saveAttachment()">Save</button>

@@ -1,30 +1,37 @@
 
  <!-- (onFileDrop)="dropped($event,$event)"  (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"-->
 
- <table>
-    <tr>
-      <td>
-        <mat-label> File  </mat-label>
-      </td>
-      <td >
+ <div class="container">
+    <div class="row fileBox">
         <ngx-file-drop  dropZoneLabel="Drop files here" >
           <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-            <input style="text-align: center;" type="file"  accept="/.*"  (change)="upload($event)"  accept=".png,.jpg,.txt,.pdf,.xlsx" /> 
+            <input name="attachment" style="text-align: center;" type="file"  accept="/.*"  (change)="upload($event)"  accept=".png,.jpg,.txt,.pdf,.xlsx" /> 
             </ng-template>
         </ngx-file-drop>
-      </td>
-    </tr>
-  </table>
-  <table *ngIf="SuccessDiv!=true">
-    <tr>
-      <td><img style="width: 20%;height: 50%;" [src]="imageURL"></td>
-    </tr>
-    <tr>
-        <td>
-            <a [href]="imageURL">Download file</a>
-        </td>
-    </tr>
-  </table>
+    </div>
+    <div class="row" *ngIf="SuccessDiv!=true || files?.length > 0">
+      <mat-card fxFlex="760px" fxFlex.xs="90%">
+        <div class="mat-card-title">
+          Recent Uploads
+        </div>
+        <div class="mat-card-content">
+          <span *ngFor="let file of files" class="mr-2">
+            <a [href]="file.filePath" target="_blank">{{file.fileName}}</a> 
+            <button mat-icon-button  color="warn" (click)="showDeleteConfirmation(file.id,null,null,file)" aria-label="Example icon button with a filter list icon">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+          <span class="mr-2" *ngIf="filename">
+            <a [href]="imageURL" target="_blank">{{filename}}</a>
+            <button mat-icon-button  color="warn" (click)="showDeleteConfirmation(0,imageURL,filename,null)" aria-label="Example icon button with a filter list icon">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </span>
+        </div>  
+      </mat-card>
+    </div>
+  </div>
+  
   
   
   
