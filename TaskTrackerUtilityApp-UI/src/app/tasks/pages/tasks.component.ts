@@ -78,20 +78,22 @@ export class TasksComponent implements OnInit {
 
     uploadedFileHandler(eventArgs: FileUploadedEventArgs) {
       this.uploadedAttachment = eventArgs.attachment;
-      console.log(this.uploadedAttachment);
     }
 
     saveAttachment()
     {
-      this.http.post(environment.apiUrl + 'File', this.uploadedAttachment).subscribe(data => {
-        this.snackBar.open('File Attached!', '', {
-            duration: 2000,
-          });
-        this.showGrid =  true;
-        this.displayAttachments = false;
-        this.getTasks();
-
-    });
+      if(this.uploadedAttachment != undefined)
+      {
+        this.http.post(environment.apiUrl + 'File', this.uploadedAttachment).subscribe(data => {
+          this.snackBar.open('File Attached!', '', {
+              duration: 2000,
+            });
+          this.showGrid =  true;
+          this.displayAttachments = false;
+          this.uploadedAttachment = null;
+          this.getTasks();
+      });
+      } 
     }
 
     showEditOrAdd(dataSelected: Task): void {
@@ -139,6 +141,7 @@ onCancel() {
 onCancelUpload() {
   this.showGrid = true;
   this.displayAttachments = false;
+  this.uploadedAttachment = null;
 }
 reloadTable() {
   this.dataSource = new MatTableDataSource(this.taskList);

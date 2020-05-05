@@ -1,5 +1,4 @@
-using System.ComponentModel.Design;
-using System.ComponentModel;
+using System.Collections.Generic;
 using AutoMapper;
 using TaskTrackerUtilityApp.API.Models;
 using TaskTrackerUtilityApp.API.DTO;
@@ -10,7 +9,8 @@ namespace TaskTrackerUtilityApp.API.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<TaskAttachmentDTO, TaskAttachment>();             
+            CreateMap<TaskAttachmentDTO, TaskAttachment>();  
+            CreateMap<TaskAttachment, TaskAttachmentDTO>();           
         }
     }
 }

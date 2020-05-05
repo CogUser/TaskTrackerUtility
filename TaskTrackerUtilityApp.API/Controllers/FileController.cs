@@ -33,6 +33,14 @@ namespace TaskTrackerUtilityApp.API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get([FromRoute]int id)
+        {
+            var attachments = _taskAttachmentRepository.FindByCondition(a => a.TaskId == id).ToList();
+            var taskAttachments = _mapper.Map<List<TaskAttachmentDTO>>(attachments);
+            return Ok(taskAttachments);
+        }
+
         [HttpPost]
         public IActionResult AddAttachment([FromBody] TaskAttachmentDTO taskAttachment)
         {

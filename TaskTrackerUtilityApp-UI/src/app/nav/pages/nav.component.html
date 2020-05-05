@@ -12,7 +12,7 @@ bg-dark">
         <a class="nav-link" href="#" routerLink="tasks">Tasks</a>
       </li>
     </ul>
-    <div *ngIf="loggedIn() == true; else loginBlock" class="dropdown">
+    <div *ngIf="loggedIn() == true; else loginBlock" class="dropdown loginFrm">
       <button class="btn btn-success my-2 my-sm-0" (click)="logout()">Logout</button>
     </div>
     <ng-template #loginBlock>

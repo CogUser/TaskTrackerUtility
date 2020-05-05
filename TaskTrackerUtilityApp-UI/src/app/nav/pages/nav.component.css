@@ -1,0 +1,8 @@
+.navbar {
+    position: relative;
+}
+
+.loginFrm {
+    position: absolute;
+    right: 10px;
+}
