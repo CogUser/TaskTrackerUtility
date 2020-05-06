@@ -1,24 +1,36 @@
 [
 {
-    "id":1,
-    "name": "Vijay",
-    "email": "vijay.patireddy@cognizant.com",
-    "role":  "Admin",
-    "isactive": true
+    "UserId":1,
+    "UserName": "Vijay",
+    "EmailAddress": "vijay.patireddy@cognizant.com",
+    "RoleId":  1,
+    "IsActive": true,
+    "Role":[
+       {"RoleId":1, "RoleName":"Admin", "IsActive":true},
+       {"RoleId":2, "RoleName":"Developer", "IsActive":true}
+    ]
 },
 {
-    "id":2,
-    "name": "Viswa",
-    "email": "vijay.patireddy@cognizant.com",
-    "role": "Developer",
-    "isactive":true
+    "UserId":2,
+    "UserName": "Viswa",
+    "EmailAddress": "vijay.patireddy@cognizant.com",
+    "RoleId": 2,
+    "IsActive":true,
+    "Role":[
+        {"RoleId":1, "RoleName":"Admin", "IsActive":true},
+        {"RoleId":2, "RoleName":"Developer", "IsActive":true}
+     ]
 },
 {
-    "id":3,
-    "name": "Supriya",
-    "email": "vijay.patireddy@cognizant.com",
-    "role": "Developer",
-    "isactive":false
+    "UserId":3,
+    "UserName": "Supriya",
+    "EmailAddress": "vijay.patireddy@cognizant.com",
+    "RoleId": 2,
+    "IsActive":false,
+    "Role":[
+        {"RoleId":1, "RoleName":"Admin", "IsActive":true},
+        {"RoleId":2, "RoleName":"Developer", "IsActive":true}
+     ]
 }
 
 ]
