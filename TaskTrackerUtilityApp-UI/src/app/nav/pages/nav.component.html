@@ -2,14 +2,14 @@
 bg-dark">
   <a class="navbar-brand" href="#">Task Tracker</a> 
     <ul class="navbar-nav mr-auto" *ngIf="loggedIn()">
-      <li class="nav-item">
+      <li class="nav-item" >
         <a class="nav-link" href="#" routerLink="dashboard" routerLinkActive="active">Dashboard</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link"  href="#" routerLink="user"> Manage Users </a>
+      <li class="nav-item">
+        <a class="nav-link"  href="#" routerLink="user" routerLinkActive="active"> Manage Users </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" routerLink="tasks">Tasks</a>
+        <a class="nav-link" href="#" routerLink="tasks" routerLinkActive="active">Tasks</a>
       </li>
     </ul>
     <div *ngIf="loggedIn() == true; else loginBlock" class="dropdown loginFrm">

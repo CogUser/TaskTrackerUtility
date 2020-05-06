@@ -15,7 +15,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private ILoginRespository _loginRepository;
+        private readonly ILoginRespository _loginRepository;
 
         public LoginController(ILoginRespository login)
         {

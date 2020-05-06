@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using TaskTrackerUtilityApp.API.Helpers;
 using TaskTrackerUtilityApp.API.Models;
 using TaskTrackerUtilityApp.API.Models.Repository;
-using TaskTrackerUtilityApp.API.Helpers;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
 
 namespace TaskTrackerUtilityApp.API.Controllers
 {
@@ -59,16 +54,18 @@ namespace TaskTrackerUtilityApp.API.Controllers
         {
             if (user == null)
             {
+                //return new StatusCodeResult(500);
                 return BadRequest("User is null.");
+            }
+
+            if(_dataRepository.IsUserExists(user))
+            {
+                return BadRequest("Email already exists");
             }
 
             user.Password = Cryptography.Encrypt(user.Password);
             user.Role = null;
             _dataRepository.Add(user);
-            //return CreatedAtRoute(
-            //      "Get",
-            //      new { Id = user.UserId },
-            //      user);
             return GetUsers();
         }
 
@@ -94,7 +91,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
-       // [Authorize(Roles = AuthenticateRole.Admin)]
+        //[Authorize(Roles = "1")]
         public IActionResult DeleteUser(int id)
         {
             User user = _dataRepository.Get(id);

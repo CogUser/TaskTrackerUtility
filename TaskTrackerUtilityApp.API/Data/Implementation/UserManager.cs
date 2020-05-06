@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TaskTrackerUtilityApp.API.Data;
 using TaskTrackerUtilityApp.API.Models.Repository;
-using TaskTrackerUtilityApp.API.Helpers;
 
 namespace TaskTrackerUtilityApp.API.Models.DataManager
 {
@@ -50,6 +47,11 @@ namespace TaskTrackerUtilityApp.API.Models.DataManager
         {
             _dbContext.Users.Remove(user);
             _dbContext.SaveChanges();
+        }
+
+        public bool IsUserExists(User user)
+        {
+            return _dbContext.Users.Any(u => u.EmailAddress == user.EmailAddress);
         }
 
     }
