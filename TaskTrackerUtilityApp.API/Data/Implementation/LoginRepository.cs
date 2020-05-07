@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Text;
 using TaskTrackerUtilityApp.API.Data.Contracts;
 using TaskTrackerUtilityApp.API.Helpers;
 using TaskTrackerUtilityApp.API.Models;
-using Microsoft.Extensions.Options;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Security.Claims;
 using TaskTrackerUtilityApp.API.Models.DataManager;
-using TaskTrackerUtilityApp.API.Models.Repository;
-using Microsoft.Extensions.Configuration;
 
 namespace TaskTrackerUtilityApp.API.Data.Implementation
 {
@@ -48,7 +45,7 @@ namespace TaskTrackerUtilityApp.API.Data.Implementation
                 {
                     new Claim(ClaimTypes.Name, user.UserId.ToString())
                 }),
-                Expires = DateTime.Now.AddMinutes(900),
+                Expires = DateTime.Now.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

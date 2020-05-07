@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-
+import { FileUploadModel, FileUploadedEventArgs } from 'src/app/file-upload/file-upload.component';
 
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
@@ -29,8 +29,12 @@ export class TasksComponent implements OnInit {
   editedTaskId:number;
   showGrid = true;  
   formMessage = '';
+  displayAttachments = false;
+  uploadedAttachment: FileUploadModel;
   isEdit = true;  
   taskList: Task[] = [];
+  public formData: FormGroup;
+  selectedTaskId: number;
   dataSource = new MatTableDataSource(this.taskList);
   displayedColumns: string[] = ['taskSummary', 'assignedTo','status','priority','progress', 'actions'];
   expandedElement:  Task | null;
@@ -91,11 +95,39 @@ export class TasksComponent implements OnInit {
         progress: new FormControl(),
       });  
   }
+  
+  showAttachments(dataSelected: Task): void {
+      this.formMessage = 'Maintain Attachments';
+      this.isEdit = false;
+      this.showGrid = false;
+      this.displayAttachments = true;
+      this.selectedTaskId = dataSelected.taskId;
+    }
+    uploadedFileHandler(eventArgs: FileUploadedEventArgs) {
+      this.uploadedAttachment = eventArgs.attachment;
+    }
+  
+   saveAttachment()
+    {
+      if(this.uploadedAttachment != undefined)
+      {
+        this.http.post(environment.apiUrl + 'File', this.uploadedAttachment).subscribe(data => {
+          this.snackBar.open('File Attached!', '', {
+              duration: 2000,
+            });
+          this.showGrid =  true;
+          this.displayAttachments = false;
+          this.uploadedAttachment = null;
+          this.getTasks();
+      });
+      } 
+    }
 
   showEditOrAdd(dataSelected: Task): void { 
 
       this.formMessage = 'Edit Task';
       this.isEdit = true;
+      this.displayAttachments = false;
       this.showGrid = false;      
       let _progress = (dataSelected.progress=="" || dataSelected.progress == null)?null : parseInt(dataSelected.progress.replace('%',''))
 
@@ -128,7 +160,15 @@ export class TasksComponent implements OnInit {
 onCancel() {
   this.taskFormData.reset();
   this.showGrid = true;
+  this.displayAttachments = false;
 }
+  
+ onCancelUpload() {
+  this.showGrid = true;
+  this.displayAttachments = false;
+  this.uploadedAttachment = null;
+}
+
 
 reloadTable() {
   this.dataSource = new MatTableDataSource(this.taskList);

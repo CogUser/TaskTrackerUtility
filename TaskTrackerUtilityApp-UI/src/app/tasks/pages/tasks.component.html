@@ -40,6 +40,10 @@
         <button mat-icon-button  color="warn" (click)="showDeleteConfirmation(element, i)" aria-label="Example icon button with a filter list icon">
           <mat-icon>delete</mat-icon>
         </button>
+       &nbsp;  
+        <button mat-icon-button  color="warn" (click)="showAttachments(element)" aria-label="Example icon button with a filter list icon">
+          <mat-icon>attachment</mat-icon>
+        </button>
       </td>
     </ng-container>
 
@@ -72,8 +76,27 @@
   </div>
   </div>
   <div>
+    
+    <div>
+    <section *ngIf="displayAttachments" fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-card fxFlex="800px" fxFlex.xs="90%">
+          <mat-card-title>{{formMessage}}</mat-card-title>
+          <mat-card-content>
+            <div *ngIf ="selectedTaskId">
+            <app-file-upload [taskId] = "selectedTaskId" (uploadedFile)="uploadedFileHandler($event)"></app-file-upload>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="center">
+            <button mat-raised-button color="primary" [disabled]="uploadedAttachment == null" (click)="saveAttachment()">Save</button>
+            <button type="button" mat-raised-button color="warn" (click)="onCancelUpload()">Cancel</button>
+          </mat-card-actions>
+        </mat-card>
+      </section>
+  </div>
 
-<section *ngIf="!showGrid">
+
+
+<section *ngIf="!showGrid && !displayAttachments">
   <!-- <form>
     <div class="form-group">
     <label for="">Task Summary</label>

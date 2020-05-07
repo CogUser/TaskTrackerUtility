@@ -15,7 +15,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private ILoginRespository _loginRepository;
+        private readonly ILoginRespository _loginRepository;
 
         public LoginController(ILoginRespository login)
         {
@@ -31,7 +31,9 @@ namespace TaskTrackerUtilityApp.API.Controllers
             if (token == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            return Ok(token);
+            return Ok(new {
+               userToken = token
+                });
         }
 
     }

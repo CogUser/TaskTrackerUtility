@@ -45,5 +45,10 @@ namespace TaskTrackerUtilityApp.API.Models.DataManager
             _dbContext.Roles.Remove(role);
             _dbContext.SaveChanges();
         }
+
+        public bool IsUserExists(Role role)
+        {
+            return _dbContext.Roles.Any(u => u.RoleName == role.RoleName);
+        }
     }
 }

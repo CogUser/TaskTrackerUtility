@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -21,6 +21,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ErrorInterceptor} from './interceptor/error-interceptor';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthService } from './_services/auth.service';
@@ -39,6 +40,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { ConfirmationDialog } from './shared/ConfirmationDialog';
 import { TasksComponent } from './tasks/pages/tasks.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { ErrorDialogService } from './_services/error-dialog.service';
 
 @NgModule({
    declarations: [
@@ -55,7 +58,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
       NavComponent,
       FileUploadComponent,
       ConfirmationDialog,
-      TasksComponent
+      TasksComponent,
+      ErrorDialogComponent
    ],
    imports: [
       BrowserModule,
@@ -86,6 +90,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
       BsDatepickerModule.forRoot()
    ],
    providers: [
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+      ErrorDialogService,
       ChartService,
       AuthService
    ],
@@ -95,7 +101,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
    entryComponents: [
       BarChartContainer,
       LineChartContainer,
-      ConfirmationDialog
+      ConfirmationDialog,
+      ErrorDialogComponent,
+      FileUploadComponent
    ]
 })
 export class AppModule { }

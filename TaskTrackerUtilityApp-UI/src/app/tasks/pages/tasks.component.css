@@ -97,3 +97,10 @@ label.control-label.required:after {
   margin-left: 5px;
   top:7px;
 }
+  mat-form-field{
+    width: 250px;
+    padding: 10px;
+}
+mat-card-title{
+    text-align: center;
+}

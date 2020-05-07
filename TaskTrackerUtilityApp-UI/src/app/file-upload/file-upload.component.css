@@ -8,3 +8,8 @@ textarea {
 textarea:focus {
     height: 4em;
 }
+
+.fileBox {
+    box-sizing: border-box;
+    -webkit-box-align: center;
+}

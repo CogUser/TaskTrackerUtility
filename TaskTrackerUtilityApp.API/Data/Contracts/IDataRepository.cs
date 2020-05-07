@@ -12,5 +12,7 @@ namespace TaskTrackerUtilityApp.API.Models.Repository
         void Add(TEntity entity);
         void Update(TEntity dbEntity, TEntity entity);
         void Delete(TEntity entity);
+
+        bool IsUserExists(TEntity entity);
     }
 }
