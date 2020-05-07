@@ -18,6 +18,7 @@ namespace TaskTrackerUtilityApp.API.Controllers
     {
         private readonly ITaskMaintenanceDataRepository _dataRepository;
 
+        public TaskMaintenancesController() { }
         public TaskMaintenancesController(ITaskMaintenanceDataRepository dataRepository)
         {
             _dataRepository = dataRepository;
