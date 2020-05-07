@@ -12,6 +12,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ErrorDialogService } from '../_services/error-dialog.service';
 import { TaskAppError } from '../error-dialog/taskAppError';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -32,15 +33,19 @@ intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<an
 
     return next.handle(request).pipe(
         catchError((error) => {
-            const data = new TaskAppError();
-            if (error.status === 401) {
-                data.reason = error.statusText;
+            if(environment.production)
+            {
+                const data = new TaskAppError();
+                if (error.status === 401) {
+                    data.reason = error.statusText;
+                }
+                if (error instanceof HttpErrorResponse) {
+                    data.reason = error && error.message ? error.message : '';
+                }
+                data.status = error.status;
+                this.errorDialogService.openDialog(data);
+                return throwError(error);
             }
-            if (error instanceof HttpErrorResponse) {
-                data.reason = error && error.message ? error.message : '';
-            }
-            data.status = error.status;
-            this.errorDialogService.openDialog(data);
             return throwError(error);
         }),
         map((event: HttpEvent<any>) => {
