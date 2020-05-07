@@ -38,6 +38,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { ConfirmationDialog } from './shared/ConfirmationDialog';
 import { TasksComponent } from './tasks/pages/tasks.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 
 @NgModule({
    declarations: [
@@ -81,7 +82,8 @@ import { TasksComponent } from './tasks/pages/tasks.component';
       MatCheckboxModule,
       MatSelectModule,
       MatSnackBarModule,
-      MatToolbarModule
+      MatToolbarModule,
+      BsDatepickerModule.forRoot()
    ],
    providers: [
       ChartService,
