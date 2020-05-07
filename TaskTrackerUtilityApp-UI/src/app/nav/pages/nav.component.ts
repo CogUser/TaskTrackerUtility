@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/_services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-nav',
@@ -19,9 +20,15 @@ export class NavComponent implements OnInit {
     if (token != null) this.route.navigate(['/dashboard']);
   }
 
-  login() {
+  login(loginForm: NgForm) {
     this.authService.login(this.model).subscribe(next => {
-      console.log('Logged in successfully');
+      this.snackBar.open('Logged in successfully!', 'OK', {
+        duration: 5000,
+      });
+      loginForm.resetForm({
+        username: '',
+        password: ''
+      });
       this.route.navigate(['/dashboard']);
     }, error => {
       console.log('Failed to login');
