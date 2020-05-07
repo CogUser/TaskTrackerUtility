@@ -39,6 +39,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { ConfirmationDialog } from './shared/ConfirmationDialog';
 import { TasksComponent } from './tasks/pages/tasks.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ErrorDialogService } from './_services/error-dialog.service';
 
@@ -85,7 +86,8 @@ import { ErrorDialogService } from './_services/error-dialog.service';
       MatCheckboxModule,
       MatSelectModule,
       MatSnackBarModule,
-      MatToolbarModule
+      MatToolbarModule,
+      BsDatepickerModule.forRoot()
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

@@ -5,46 +5,18 @@
   <button  mat-raised-button color="primary" (click)="createTask()" >Create Task</button>
 </div>
 <div style="padding-top: 10px;">
-  <table mat-table style="margin-left: 10px;margin-right: 40px;" [dataSource]="dataSource" class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-  
-    <!-- <ng-container matColumnDef="taskDescription">
-      <th mat-header-cell *matHeaderCellDef> Task Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.taskDescription}} </td>
-    </ng-container> -->
-  
+  <table mat-table style="margin-left: 10px;margin-right: 40px;" [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+        
     <ng-container matColumnDef="taskSummary">
       <th mat-header-cell *matHeaderCellDef> Task Summary </th>
       <td mat-cell *matCellDef="let element"> {{element.taskSummary}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="assignee">
-      <th mat-header-cell *matHeaderCellDef> Assignee  Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.assignee}} </td>
-    </ng-container>
+    </ng-container>  
+    
     <ng-container matColumnDef="assignedTo">
       <th mat-header-cell *matHeaderCellDef> Assigned To </th>
       <td mat-cell *matCellDef="let element"> {{element.assignedTo}} </td>
     </ng-container>
-    <ng-container matColumnDef="plannedStartDate">
-      <th mat-header-cell *matHeaderCellDef> PlannedStartDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.plannedStartDate| date: 'dd/MM/yyyy'}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="plannedEndDate">
-      <th mat-header-cell *matHeaderCellDef> PlannedEndDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.plannedEndDate| date: 'dd/MM/yyyy'}} </td>
-    </ng-container>
-    <ng-container matColumnDef="actualStartDate">
-      <th mat-header-cell *matHeaderCellDef> ActualStartDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.actualStartDate| date: 'dd/MM/yyyy'}} </td>
-    </ng-container>
-    <ng-container matColumnDef="actualEndDate">
-      <th mat-header-cell *matHeaderCellDef> ActualEndDate </th>
-      <td mat-cell *matCellDef="let element"> {{element.actualEndDate| date: 'dd/MM/yyyy'}} </td>
-    </ng-container>
+    
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
       <td mat-cell *matCellDef="let element"> {{element.status}} </td>
@@ -57,53 +29,55 @@
       <th mat-header-cell *matHeaderCellDef> Progress </th>
       <td mat-cell *matCellDef="let element"> {{element.progress}} </td>
     </ng-container>
-    <ng-container>
-      <app-file-upload></app-file-upload>
-    </ng-container>
-     
-    <!-- <ng-container matColumnDef="createdBy">
-      <th mat-header-cell *matHeaderCellDef> CreatedBy </th>
-      <td mat-cell *matCellDef="let element"> {{element.createdBy}} </td>
-    </ng-container>
-    <ng-container matColumnDef="modifiedBy">
-      <th mat-header-cell *matHeaderCellDef> ModifiedBy </th>
-      <td mat-cell *matCellDef="let element"> {{element.modifiedBy}} </td>
-    </ng-container> -->
-    <!-- <ng-container matColumnDef="createdDateTime">
-      <th mat-header-cell *matHeaderCellDef> CreatedDateTime </th>
-      <td mat-cell *matCellDef="let element"> {{element.createdDateTime| date: 'dd/MM/yyyy'}} </td>
-    </ng-container>
-    <ng-container matColumnDef="modifiedDateTime">
-      <th mat-header-cell *matHeaderCellDef> ModifiedDateTime </th>
-      <td mat-cell *matCellDef="let element"> {{element.modifiedDateTime| date: 'dd/MM/yyyy'}} </td>
-    </ng-container> -->
-    <!-- <ng-container matColumnDef="userId">
-      <th mat-header-cell *matHeaderCellDef> UserId </th>
-      <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
-    </ng-container>  -->
 
-    <ng-container matColumnDef="Actions">
+    <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element;let i = dataIndex;">
         <button mat-icon-button color="primary" (click)="showEditOrAdd(element)" aria-label="Example icon button with a filter list icon">
           <mat-icon>edit</mat-icon>
         </button>
   &nbsp;
-        <button mat-icon-button  color="warn" (click)="showDeleteConfirmation(element)" aria-label="Example icon button with a filter list icon">
+        <button mat-icon-button  color="warn" (click)="showDeleteConfirmation(element, i)" aria-label="Example icon button with a filter list icon">
           <mat-icon>delete</mat-icon>
         </button>
+       &nbsp;  
         <button mat-icon-button  color="warn" (click)="showAttachments(element)" aria-label="Example icon button with a filter list icon">
           <mat-icon>attachment</mat-icon>
         </button>
       </td>
     </ng-container>
+
+     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+      <div class="example-element-detail"
+           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">        
+        <ul class="example-element-description">
+          <li>
+            <label>Description:</label><span>{{element.taskDescription}}</span>     
+            <label>Assigned By:</label><span>{{element.assignee}}</span> 
+            <label>Planned Start Date:</label><span>{{element.plannedStartDate | date:'MM/dd/yyyy'}}</span>     
+            <label>Planned End Date :</label><span>{{element.plannedEndDate | date:'MM/dd/yyyy'}}</span>
+            <label>Actual Start Date :</label><span>{{element.actualStartDate | date:'MM/dd/yyyy'}}</span>                 
+            <label>Actual End Date :</label><span>{{element.actualEndDate | date:'MM/dd/yyyy'}}</span> 
+            <label>Created By:</label><span>{{element.createdBy}}</span>               
+          </li>  
+        </ul>  
+      </div>
+    </td>
+  </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = expandedElement === element ? null : element"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
   </div>
   </div>
   <div>
+    
+    <div>
     <section *ngIf="displayAttachments" fxLayout="row wrap" fxLayoutAlign="center center">
       <mat-card fxFlex="800px" fxFlex.xs="90%">
           <mat-card-title>{{formMessage}}</mat-card-title>
@@ -121,89 +95,175 @@
   </div>
 
 
-  <div>
+
+<section *ngIf="!showGrid && !displayAttachments">
+  <!-- <form>
+    <div class="form-group">
+    <label for="">Task Summary</label>
+    <input type="text" class="form-control" />
+  </div>
+  </form> -->
+  <form [formGroup] = "taskFormData" (ngSubmit)="formSubmit()">
+  <div class="container form-group" id="divTaskFormContainer" >   
+    <div class="form-group" id="divTaskTitleHeader">
+      <div style="display: inline;">{{formMessage}}</div>     
+      <button class="btn btn-primary float-right" style="margin-right: 20px;background-color: #3f51b5;">Save</button>
+      <button class="btn btn-secondary float-right"style="margin-right: 20px;" (click)="onCancel()">Cancel</button>      
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <label for="taskSummary" class="control-label required">Task Summary</label>
+        <textarea formControlName="taskSummary" id="taskSummary" class="form-control"></textarea>
+        <div *ngIf="taskFormData.get('taskSummary').touched && taskFormData.get('taskSummary').invalid" class="alert alert-danger">Task Sammary required.</div>
+      </div>
+      <div class="col-sm">
+        <label for="taskDescription" class="control-label required">Task Description</label>
+        <textarea formControlName="taskDescription" id="taskDescription" class="form-control" ></textarea>
+        <div *ngIf="taskFormData.get('taskDescription').touched && taskFormData.get('taskDescription').invalid" class="alert alert-danger">Task Description required.</div>
+      </div>      
+      <div class="col-sm">
+        <label for="priority" class="control-label required">Priority</label>
+        <select id="priority" class="form-control" formControlName="priority">
+          <option value="">Select Priority</option>
+          <option *ngFor="let tskPriority of priorities" [ngValue]='tskPriority.value'>{{tskPriority.text}}</option>
+        </select>       
+        <div *ngIf="taskFormData.get('priority').touched && taskFormData.get('priority').invalid" class="alert alert-danger">Select priority</div>
+      </div>    
+    </div>     
+    <div class="row">
+      <div class="col-sm">
+        <label for="" class="control-label required">Assigned To</label>
+        <select id="assignedTo" class="form-control" formControlName="assignedTo">
+          <option value="">Select Assigned To</option>
+          <option *ngFor="let user of userList" [ngValue]='user.value'>{{user.text}}</option>
+        </select>   
+        <div *ngIf="taskFormData.get('assignedTo').touched && taskFormData.get('assignedTo').invalid" class="alert alert-danger">Select Assined To</div>
+      </div> 
+      <div class="col-sm">
+        <label for="plannedStartDate" class="control-label required">Planned Start Date</label>
+        <input type="text" class="form-control" id="plannedStartDate" placeholder="MM/DD/YYYY" formControlName="plannedStartDate"  bsDatepicker />
+        <div *ngIf="taskFormData.get('plannedStartDate').touched && taskFormData.get('plannedStartDate').invalid" class="alert alert-danger">Select Planned Start Date</div>
+      </div>    
+      <div class="col-sm">
+        <label for="" class="control-label required">Planned End Date</label>
+        <input type="text" class="form-control" id="plannedEndDate" placeholder="MM/DD/YYYY" formControlName="plannedEndDate"  bsDatepicker />
+        <div *ngIf="taskFormData.get('plannedEndDate').touched && taskFormData.get('plannedEndDate').invalid" class="alert alert-danger">Select Planned End Date</div>
+      </div>            
+    </div>   
+    <div class="row">       
+      <div class="col-sm">
+        <label for="" class="control-label required">Status</label>
+        <select id="status" class="form-control" formControlName="status">          
+          <option *ngFor="let tskStatus of taskStatusList" [ngValue]='tskStatus.value'>{{tskStatus.text}}</option>
+        </select> 
+        <div *ngIf="taskFormData.get('status').touched && taskFormData.get('status').invalid" class="alert alert-danger">Select Status</div>
+      </div>      
+      <div class="col-sm">
+        <label for="">Actual Start Date</label>
+        <input type="text" class="form-control" id="actualStartDate" placeholder="MM/DD/YYYY" formControlName="actualStartDate"  bsDatepicker />
+      </div>  
+      <div class="col-sm">
+        <label for="">Actual End Date</label>
+        <input type="text" class="form-control" id="actualEndDate" placeholder="MM/DD/YYYY" formControlName="actualEndDate"  bsDatepicker />
+      </div>     
+    </div> 
+    <div class="row">  
+      <div class="col-sm">
+        <label for="progress">Progress</label>
+        <input type="number" class="form-control"  formControlName="progress" id="progress"/>
+      </div>         
+      <div class="col-sm">
+        <label for="taskWatcher">Watcher</label>
+        <select class="form-control" formControlName="taskWatcher" id="taskWatcher">
+          <option value="">Select Watcher</option>
+          <option *ngFor="let user of userList" [ngValue]='user.value'>{{user.text}}</option>
+        </select> 
+      </div>      
+      <div class="col-sm">
+        <label for="createdBy">Created By</label>
+        <select class="form-control" formControlName="createdBy" id="createdBy"> 
+          <option value="">Select Created By</option>
+          <option *ngFor="let user of userList" [ngValue]='user.value'>{{user.text}}</option>
+        </select> 
+      </div>        
+    </div> 
+  </div>
+</form>
+</section>
 
 
-  <section *ngIf="!showGrid && !displayAttachments" fxLayout="row wrap" fxLayoutAlign="center center">
-    <mat-card fxFlex="800px" fxFlex.xs="90%">
+<!-- 
+  <section *ngIf="!showGrid" fxLayout="row wrap" fxLayoutAlign="center center">
+    <mat-card fxFlex="500px" fxFlex.xs="90%">
+      <h2>Test</h2>
         <mat-card-title>{{formMessage}}</mat-card-title>
         <form [formGroup]="formData" autocomplete="off" novalidate (ngSubmit)="formSubmit(formData.value)" fxLayout="column wrap"
       fxLayoutAlign="center center" fxLayoutGap="10px">
   <mat-card-content>
     <mat-form-field>
-        <input matInput type="text" placeholder="Summary" formControlName="taskSummary" id="taskSummary">
+        <input matInput type="text" placeholder="taskSummary" formControlName="taskSummary" id="taskSummary">
         <mat-hint align="end">Not more then 15 characters long.</mat-hint>
-        <mat-error *ngIf="hasError('taskSummary', 'required')">Summary is required</mat-error>
+        <mat-error *ngIf="hasError('taskSummary', 'required')">taskSummary is required</mat-error>
          
       </mat-form-field>
       <mat-form-field>
-        <textarea matInput type="text" placeholder="Description" formControlName="taskDescription" id="taskDescription"></textarea>
-        <mat-error *ngIf="hasError('taskDescription', 'required')">Description is required</mat-error>
+        <input matInput type="text" placeholder="taskDescription" formControlName="taskDescription" id="taskDescription">
+        <mat-error *ngIf="hasError('taskDescription', 'required')">taskDescription is required</mat-error>
       
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="Assignee" formControlName="assignee" id="assignee">
-        <mat-error *ngIf="hasError('assignee', 'required')">Assignee is required</mat-error>
+        <input matInput type="text" placeholder="assignee" formControlName="assignee" id="assignee">
+        <mat-error *ngIf="hasError('assignee', 'required')">assignee is required</mat-error>
       
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="Assigned To" formControlName="assignedTo" id="assignedTo">
+        <input matInput type="text" placeholder="assignedTo" formControlName="assignedTo" id="assignedTo">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="Planned Start Date" formControlName="plannedStartDate" id="plannedStartDate">
+        <input matInput type="datetime" placeholder="plannedStartDate" formControlName="plannedStartDate" id="plannedStartDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="Planned End Date" formControlName="plannedEndDate" id="plannedEndDate">
+        <input matInput type="datetime" placeholder="plannedEndDate" formControlName="plannedEndDate" id="plannedEndDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="Actual Start Date" formControlName="actualStartDate" id="actualStartDate">
+        <input matInput type="datetime" placeholder="actualStartDate" formControlName="actualStartDate" id="actualStartDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="Actual End Date" formControlName="actualEndDate" id="actualEndDate">
+        <input matInput type="datetime" placeholder="actualEndDate" formControlName="actualEndDate" id="actualEndDate">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="Status" formControlName="status" id="status">
-        <mat-error *ngIf="hasError('status', 'required')">Status is required</mat-error>
+        <input matInput type="text" placeholder="status" formControlName="status" id="status">
+        <mat-error *ngIf="hasError('status', 'required')">status is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="Priority" formControlName="priority" id="priority">
+        <input matInput type="text" placeholder="priority" formControlName="priority" id="priority">
         <mat-error *ngIf="hasError('priority', 'required')">priority is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="number" placeholder="Progress" formControlName="progress" id="progress">
-        <mat-error *ngIf="hasError('progress', 'required')">Progress is required</mat-error>
+        <input matInput type="number" placeholder="progress" formControlName="progress" id="progress">
+        <mat-error *ngIf="hasError('progress', 'required')">progress is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="Created By" formControlName="createdBy" id="createdBy">
-        <mat-error *ngIf="hasError('createdBy', 'required')">Created By" is required</mat-error>
+        <input matInput type="text" placeholder="createdBy" formControlName="createdBy" id="createdBy">
+        <mat-error *ngIf="hasError('createdBy', 'required')">createdBy is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" placeholder="Modified By" formControlName="modifiedBy" id="modifiedBy">
+        <input matInput type="text" placeholder="modifiedBy" formControlName="modifiedBy" id="modifiedBy">
         
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="Created Date Time" formControlName="createdDateTime" id="createdDateTime">
-        <mat-error *ngIf="hasError('createdDateTime', 'required')">Created Date Time is required</mat-error>
+        <input matInput type="datetime" placeholder="createdDateTime" formControlName="createdDateTime" id="createdDateTime">
+        <mat-error *ngIf="hasError('createdDateTime', 'required')">createdDateTime is required</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="datetime" placeholder="Modified Date Time" formControlName="modifiedDateTime" id="modifiedDateTime">
+        <input matInput type="datetime" placeholder="modifiedDateTime" formControlName="modifiedDateTime" id="modifiedDateTime">
+        <mat-error *ngIf="hasError('modifiedDateTime', 'required')">modifiedDateTime is required</mat-error>
       </mat-form-field>
-
-      <!-- <mat-form-field *ngIf="!isEdit">
-        <input matInput type="password" placeholder="Password" formControlName="password" id="password">
-        <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
-        <mat-error *ngIf="hasError('password', 'maxlength')">Password should be less than 15 characters</mat-error>
-        <mat-error *ngIf="hasError('password', 'minlength')">Password should be minimum 5 characters</mat-error>
-        
-      </mat-form-field> -->
-        
-
-         
   </mat-card-content>
   <mat-card-actions align="center">
     <button mat-raised-button color="primary" [disabled]="!formData.valid">Save</button>
@@ -212,4 +272,4 @@
 </form>
       </mat-card>
   </section>
-  </div>
+  </div> -->

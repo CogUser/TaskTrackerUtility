@@ -4,8 +4,8 @@ export class Task {
     taskId: number;
     taskSummary: string;
     taskDescription: string;
-    assignee?: User;
-    assigneeId: number;
+    assignee: string;
+    assignedTo: string;
     plannedStartDate: Date;
     plannedEndDate: Date;
     actualStartDate: Date;
@@ -15,7 +15,7 @@ export class Task {
     progress: string;
     watchers: string;
     userId: number;
-    createdBy: number;
-    modifiedBy: number;
+    createdBy: string;
+    modifiedBy: string;
 }
 
